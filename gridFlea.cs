@@ -10,16 +10,20 @@ namespace GridFlea
 {
     public class GridFlea
     {
-        private int initX;
-        private int initY;
-        private int boundX;
-        private int boundY;
+        private const int BOUND_X = 100;
+        private const int BOUND_Y = 100;
 
+        private readonly int size;
+
+        private readonly int initX;
+        private readonly int initY;
         private int x;
         private int y;
 
-        private int size;
+        private readonly int initReward;
         private int reward;
+
+        private readonly int initEnergy;
         private int energy;
 
         enum State
@@ -30,51 +34,68 @@ namespace GridFlea
         }
         State state = State.Active;
 
-
-        public GridFlea(int x, int y)
+        enum Axis
         {
-            setup(x, y);
+            X,
+            Y
+        }
+        Axis direction = Axis.X;
+
+        public GridFlea(int x = 0, int y = 0, int size = 10, int reward = 10, int energy = 10)
+        {
+            initX = x;
+            initY = y;
+            initEnergy = energy;
+            initReward = reward;
+
+            this.size = size;
+
+            setup();
         }
 
-        public void reset(int x, int y)
+        public void reset()
         {
-            setup(x, y);
-        }
-
-        public void revive(int energy)
-        {
-            if (energy <= 0)
+            if (isDead())
             {
-                throw new ArgumentException("Energy must be greater than zero");
+                throw new InvalidOperationException("Can not reset a Dead (deactivated) GridFlea");
             }
+
+            setup();
+        }
+
+        public void revive(uint energy)
+        {
             if (!isInactive())
             {
                 throw new InvalidOperationException("Can not revive an Active or Dead (deactivated) GridFlea");
-	        }
+            }
 
-            this.energy = energy;
+            this.energy = (int)energy;
             this.state = State.Active;
-            // TODO: reset reward?
         }
 
 
         public void move(int p)
         {
+            if (isDead())
+            {
+                throw new InvalidOperationException("Can not move a Dead (deactivated) GridFlea");
+            }
+
             int amount = isActive() ? p : 1;
 
-            // Choose a random direction (axis)
-            Random rand = new Random();
-            if (rand.NextDouble() >= 0.5)
+            if (direction == Axis.X)
             {
-                this.x += amount;
+                x += p;
             }
             else
             {
-                this.y += amount;
+                y += p;
             }
+            switchDirection();
 
-            this.reward -= amount;
-            this.energy--;
+            reward -= Math.Abs(amount);
+            energy--;
         }
 
         public int value()
@@ -87,6 +108,18 @@ namespace GridFlea
             return reward * size * getChange();
         }
 
+        // PRIVATE METHODS
+        private void setup()
+        {
+            x = initX;
+            y = initY;
+            energy = initEnergy;
+            reward = initReward;
+
+            state = State.Active;
+            direction = Axis.X;
+        }
+
         private int getChange()
         {
             return (initX - x) + (initY - y);
@@ -94,39 +127,23 @@ namespace GridFlea
 
         private bool isOutOfBounds()
         {
-            return Math.Abs(this.x) > boundX || Math.Abs(this.y) > boundY;
-        }
-
-        private void setup(int x, int y)
-        {
-            this.initX = x;
-            this.initY = y;
-
-
-            Random rand = new Random();
-            this.size = rand.Next(1, 10);
-            this.energy = rand.Next(1, 10);
-
-            this.boundX = rand.Next(10, 100);
-            this.boundY = rand.Next(10, 100);
-
-            // TODO: reward
+            return Math.Abs(x) > BOUND_X || Math.Abs(y) > BOUND_Y;
         }
 
         private State getState()
         {
-            if (state == State.Active && this.energy <= 0)
+            // State transitions
+            if (state == State.Active && energy <= 0)
             {
-                this.state = State.Inactive;
+                state = State.Inactive;
             }
             else if (state != State.Dead && isOutOfBounds())
             {
-                this.state = State.Dead;
+                state = State.Dead;
             }
 
-            return this.state;
+            return state;
         }
-
 
         private bool isActive()
         {
@@ -139,6 +156,11 @@ namespace GridFlea
         private bool isDead()
         {
             return getState() == State.Dead;
+        }
+
+        private void switchDirection()
+        {
+            direction = (direction == Axis.X) ? Axis.Y : Axis.X;
         }
 
     }
