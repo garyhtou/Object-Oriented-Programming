@@ -32,14 +32,14 @@ namespace GridFlea
             Inactive,
             Dead
         }
-        State state = State.Active;
+        State state;
 
         enum Axis
         {
             X,
             Y
         }
-        Axis direction = Axis.X;
+        Axis direction;
 
         public GridFlea(int x = 0, int y = 0, int size = 10, int reward = 10, int energy = 10)
         {
@@ -122,7 +122,7 @@ namespace GridFlea
 
         private int getChange()
         {
-            return (initX - x) + (initY - y);
+            return Math.Abs(initX - x) + Math.Abs(initY - y);
         }
 
         private bool isOutOfBounds()
