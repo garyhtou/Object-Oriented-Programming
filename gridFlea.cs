@@ -13,7 +13,7 @@ namespace GridFlea
         private const int BOUND_X = 100;
         private const int BOUND_Y = 100;
 
-        private readonly int size;
+        private readonly uint size;
 
         private readonly int initX;
         private readonly int initY;
@@ -41,7 +41,7 @@ namespace GridFlea
         }
         Axis direction;
 
-        public GridFlea(int x = 0, int y = 0, int size = 10, int reward = 10, int energy = 10)
+        public GridFlea(int x = 0, int y = 0, uint size = 10, int reward = 10, int energy = 10)
         {
             initX = x;
             initY = y;
@@ -105,7 +105,7 @@ namespace GridFlea
                 throw new InvalidOperationException("Can not get value of an Inactive or Dead (deactivated) GridFlea");
             }
 
-            return reward * size * getChange();
+            return reward * (int)size * getChange();
         }
 
         // PRIVATE METHODS
