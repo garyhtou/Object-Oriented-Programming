@@ -6,7 +6,7 @@
 
 using System;
 
-namespace GridFlea
+namespace GridFleaNS
 {
     public class GridFlea
     {

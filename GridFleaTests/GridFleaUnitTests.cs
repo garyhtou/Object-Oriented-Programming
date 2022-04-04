@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GridFlea;
+using System;
+using GridFleaNS;
 
 namespace GridFleaTests
 {
@@ -9,6 +10,7 @@ namespace GridFleaTests
         [TestMethod]
         public void TestMethod1()
         {
+            GridFlea g = new GridFlea();
         }
     }
 }
