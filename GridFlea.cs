@@ -10,8 +10,9 @@ namespace GridFlea
 {
     public class GridFlea
     {
-        private const int BOUND_X = 100;
-        private const int BOUND_Y = 100;
+        private const int BOUND_X = 1_000;
+        private const int BOUND_Y = 1_000;
+        private const int UNENERGETIC_MOVE_AMT = 1;
 
         private readonly uint size;
 
@@ -82,14 +83,22 @@ namespace GridFlea
                 throw new InvalidOperationException("Can not move a Dead (deactivated) GridFlea");
             }
 
-            int amount = isActive() ? p : 1;
+            int amount = isActive() ? p : UNENERGETIC_MOVE_AMT;
 
             if (direction == Axis.X)
             {
+                if (x + p > BOUND_X)
+                {
+                    state = State.Dead;
+                }
                 x += p;
             }
             else
             {
+                if (y + p > BOUND_X)
+                {
+                    state = State.Dead;
+                }
                 y += p;
             }
             switchDirection();
