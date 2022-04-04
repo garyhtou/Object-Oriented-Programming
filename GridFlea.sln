@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.810.21
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridFlea", "GridFlea.csproj", "{50E5A96F-6A8E-4922-9727-DD371D68ACF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridFleaTests", "GridFleaTests\GridFleaTests.csproj", "{9595CED8-1F8A-49C9-93D1-815A0906EFC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{50E5A96F-6A8E-4922-9727-DD371D68ACF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50E5A96F-6A8E-4922-9727-DD371D68ACF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50E5A96F-6A8E-4922-9727-DD371D68ACF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9595CED8-1F8A-49C9-93D1-815A0906EFC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9595CED8-1F8A-49C9-93D1-815A0906EFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9595CED8-1F8A-49C9-93D1-815A0906EFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9595CED8-1F8A-49C9-93D1-815A0906EFC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
