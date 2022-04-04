@@ -11,6 +11,7 @@ namespace GridFleaTests
         public void TestMethod1()
         {
             GridFlea g = new GridFlea();
+            g.GetState();
         }
     }
 }
