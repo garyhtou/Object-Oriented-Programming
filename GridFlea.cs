@@ -51,22 +51,22 @@ namespace GridFlea
 
             this.size = size;
 
-            setup();
+            Setup();
         }
 
-        public void reset()
+        public void Reset()
         {
-            if (isDead())
+            if (IsDead())
             {
                 throw new InvalidOperationException("Can not reset a Dead (deactivated) GridFlea");
             }
 
-            setup();
+            Setup();
         }
 
-        public void revive(uint energy)
+        public void Revive(uint energy)
         {
-            if (!isInactive())
+            if (!IsInactive())
             {
                 throw new InvalidOperationException("Can not revive an Active or Dead (deactivated) GridFlea");
             }
@@ -76,14 +76,14 @@ namespace GridFlea
         }
 
 
-        public void move(int p)
+        public void Move(int p)
         {
-            if (isDead())
+            if (IsDead())
             {
                 throw new InvalidOperationException("Can not move a Dead (deactivated) GridFlea");
             }
 
-            int amount = isActive() ? p : UNENERGETIC_MOVE_AMT;
+            int amount = IsActive() ? p : UNENERGETIC_MOVE_AMT;
 
             if (direction == Axis.X)
             {
@@ -101,24 +101,24 @@ namespace GridFlea
                 }
                 y += p;
             }
-            switchDirection();
+            SwitchDirection();
 
             reward -= Math.Abs(amount);
             energy--;
         }
 
-        public int value()
+        public int Value()
         {
-            if (!isActive())
+            if (!IsActive())
             {
                 throw new InvalidOperationException("Can not get value of an Inactive or Dead (deactivated) GridFlea");
             }
 
-            return reward * (int)size * getChange();
+            return reward * (int)size * GetChange();
         }
 
         // PRIVATE METHODS
-        private void setup()
+        private void Setup()
         {
             x = initX;
             y = initY;
@@ -129,24 +129,24 @@ namespace GridFlea
             direction = Axis.X;
         }
 
-        private int getChange()
+        private int GetChange()
         {
             return Math.Abs(initX - x) + Math.Abs(initY - y);
         }
 
-        private bool isOutOfBounds()
+        private bool IsOutOfBounds()
         {
             return Math.Abs(x) > BOUND_X || Math.Abs(y) > BOUND_Y;
         }
 
-        private State getState()
+        private State GetState()
         {
             // State transitions
             if (state == State.Active && energy <= 0)
             {
                 state = State.Inactive;
             }
-            else if (state != State.Dead && isOutOfBounds())
+            else if (state != State.Dead && IsOutOfBounds())
             {
                 state = State.Dead;
             }
@@ -154,20 +154,20 @@ namespace GridFlea
             return state;
         }
 
-        private bool isActive()
+        private bool IsActive()
         {
-            return getState() == State.Active;
+            return GetState() == State.Active;
         }
-        private bool isInactive()
+        private bool IsInactive()
         {
-            return getState() == State.Inactive;
+            return GetState() == State.Inactive;
         }
-        private bool isDead()
+        private bool IsDead()
         {
-            return getState() == State.Dead;
+            return GetState() == State.Dead;
         }
 
-        private void switchDirection()
+        private void SwitchDirection()
         {
             direction = (direction == Axis.X) ? Axis.Y : Axis.X;
         }
