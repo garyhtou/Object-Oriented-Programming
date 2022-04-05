@@ -40,7 +40,11 @@ namespace GridFleaNS
                 int moveTimes = rand.Next(1, 3);
                 AttemptToMove(flea, moveTimes);
 
-                print($"This flea is currently {flea.GetState()}, located at ({flea.GetX()}, {flea.GetY()}), facing in the {flea.GetDirection()}-axis, has a size of {flea.GetSize()}, energy of {flea.GetEnergy()}, and reward of {flea.GetReward()}.");
+                print($"This flea is currently {flea.GetState()}, located at " +
+                        $"({flea.GetX()}, {flea.GetY()}), facing in the " +
+                        $"{flea.GetDirection()}-axis, has a size of " +
+                        $"{flea.GetSize()}, energy of {flea.GetEnergy()}, " +
+                        $"and reward of {flea.GetReward()}.");
                 Console.WriteLine($"=== Finished Running GridFlea #{id} ===\n\n");
             }
         }
