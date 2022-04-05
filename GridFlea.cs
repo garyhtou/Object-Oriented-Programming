@@ -8,10 +8,21 @@ using System;
 
 namespace GridFleaNS
 {
+    public enum State
+    {
+        Active,
+        Inactive,
+        Dead
+    }
+    public enum Axis
+    {
+        X,
+        Y
+    }
     public class GridFlea
     {
-        private const int BOUND_X = 1_000;
-        private const int BOUND_Y = 1_000;
+        public const int BOUND_X = 1_000;
+        public const int BOUND_Y = 1_000;
         private const int UNENERGETIC_MOVE_AMT = 1;
 
         private readonly uint size;
@@ -27,19 +38,7 @@ namespace GridFleaNS
         private readonly int initEnergy;
         private int energy;
 
-        enum State
-        {
-            Active,
-            Inactive,
-            Dead
-        }
         State state;
-
-        enum Axis
-        {
-            X,
-            Y
-        }
         Axis direction;
 
         public GridFlea(int x = 0, int y = 0, uint size = 10, int reward = 10, int energy = 10)
@@ -117,6 +116,60 @@ namespace GridFleaNS
             return reward * (int)size * GetChange();
         }
 
+        public State GetState()
+        {
+            // State transitions
+            if (state == State.Active && energy <= 0)
+            {
+                state = State.Inactive;
+            }
+            else if (state != State.Dead && IsOutOfBounds())
+            {
+                state = State.Dead;
+            }
+
+            return state;
+        }
+
+        public bool IsActive()
+        {
+            return GetState() == State.Active;
+        }
+        public bool IsInactive()
+        {
+            return GetState() == State.Inactive;
+        }
+        public bool IsDead()
+        {
+            return GetState() == State.Dead;
+        }
+
+        public int GetX()
+        {
+            return x;
+        }
+        public int GetY()
+        {
+            return y;
+        }
+
+        public int GetEnergy()
+        {
+            return energy;
+        }
+        public uint GetSize()
+        {
+            return size;
+        }
+        public Axis GetDirection()
+        {
+            return direction;
+        }
+        public int GetReward()
+        {
+            return reward;
+        }
+
         // PRIVATE METHODS
         private void Setup()
         {
@@ -137,34 +190,6 @@ namespace GridFleaNS
         private bool IsOutOfBounds()
         {
             return Math.Abs(x) > BOUND_X || Math.Abs(y) > BOUND_Y;
-        }
-
-        private State GetState()
-        {
-            // State transitions
-            if (state == State.Active && energy <= 0)
-            {
-                state = State.Inactive;
-            }
-            else if (state != State.Dead && IsOutOfBounds())
-            {
-                state = State.Dead;
-            }
-
-            return state;
-        }
-
-        private bool IsActive()
-        {
-            return GetState() == State.Active;
-        }
-        private bool IsInactive()
-        {
-            return GetState() == State.Inactive;
-        }
-        private bool IsDead()
-        {
-            return GetState() == State.Dead;
         }
 
         private void SwitchDirection()
