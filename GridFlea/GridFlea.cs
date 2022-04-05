@@ -8,21 +8,22 @@ using System;
 
 namespace GridFleaNS
 {
-    public enum State
-    {
-        Active,
-        Inactive,
-        Dead
-    }
-    public enum Axis
-    {
-        X,
-        Y
-    }
     public class GridFlea
     {
         public const int BOUND_X = 1_000;
         public const int BOUND_Y = 1_000;
+        public enum State
+        {
+            Active, // "Energetic" mode is directly tied to Active State
+            Inactive,
+            Dead // "deactivated"
+        }
+        public enum Axis
+        {
+            X,
+            Y
+        }
+
         private const int UNENERGETIC_MOVE_AMT = 1;
 
         private readonly uint size;

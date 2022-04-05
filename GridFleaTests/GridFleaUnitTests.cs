@@ -120,7 +120,7 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea();
 
-            Axis initDirection = g.GetDirection();
+            GridFlea.Axis initDirection = g.GetDirection();
             g.Move(1);
             g.Reset();
             Assert.AreEqual(initDirection, g.GetDirection(), "GridFlea direction not set to initial");
@@ -193,11 +193,11 @@ namespace GridFleaTests
 
             int moveAmount = 10;
 
-            Axis direction = g.GetDirection();
+            GridFlea.Axis direction = g.GetDirection();
             g.Move(moveAmount);
 
             int movedAmount;
-            if (direction == Axis.X)
+            if (direction == GridFlea.Axis.X)
             {
                 movedAmount = g.GetX() - initX;
             }
@@ -218,11 +218,11 @@ namespace GridFleaTests
 
             int moveAmount = 10;
 
-            Axis direction = g.GetDirection();
+            GridFlea.Axis direction = g.GetDirection();
             g.Move(moveAmount);
 
             int movedAmount;
-            if (direction == Axis.X)
+            if (direction == GridFlea.Axis.X)
             {
                 movedAmount = g.GetX() - initX;
             }
@@ -243,11 +243,11 @@ namespace GridFleaTests
 
             int moveAmount = -10;
 
-            Axis direction = g.GetDirection();
+            GridFlea.Axis direction = g.GetDirection();
             g.Move(moveAmount);
 
             int movedAmount;
-            if (direction == Axis.X)
+            if (direction == GridFlea.Axis.X)
             {
                 movedAmount = g.GetX() - initX;
             }
@@ -264,7 +264,7 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea();
 
-            Axis initDirection = g.GetDirection();
+            GridFlea.Axis initDirection = g.GetDirection();
             g.Move(1);
 
             Assert.AreNotEqual(initDirection, g.GetDirection(), "GridFlea did not change directions after moving");
@@ -291,8 +291,8 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            Axis direction = g.GetDirection();
-            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            GridFlea.Axis direction = g.GetDirection();
+            int moveAmount = direction == GridFlea.Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
             moveAmount++;
             moveAmount *= -1;
 
@@ -306,8 +306,8 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            Axis direction = g.GetDirection();
-            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            GridFlea.Axis direction = g.GetDirection();
+            int moveAmount = direction == GridFlea.Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
 
             g.Move(moveAmount);
 
@@ -319,8 +319,8 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            Axis direction = g.GetDirection();
-            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            GridFlea.Axis direction = g.GetDirection();
+            int moveAmount = direction == GridFlea.Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
             moveAmount *= -1;
 
             g.Move(moveAmount);
@@ -447,8 +447,8 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            Axis direction = g.GetDirection();
-            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            GridFlea.Axis direction = g.GetDirection();
+            int moveAmount = direction == GridFlea.Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
             moveAmount++;
 
             g.Move(moveAmount); // Move out of bounds (become dead)
