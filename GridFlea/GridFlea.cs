@@ -86,7 +86,7 @@ namespace GridFleaNS
 
             if (direction == Axis.X)
             {
-                if (x + amount > BOUND_X)
+                if (Math.Abs(x) > BOUND_X - Math.Abs(amount))
                 {
                     state = State.Dead;
                 }
@@ -94,7 +94,7 @@ namespace GridFleaNS
             }
             else
             {
-                if (y + p > BOUND_X)
+                if (Math.Abs(y) > BOUND_Y - Math.Abs(amount))
                 {
                     state = State.Dead;
                 }

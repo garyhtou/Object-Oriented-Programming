@@ -146,7 +146,7 @@ namespace GridFleaTests
             GridFlea g = InactiveGridFleaFactory();
 
             int newEnergy = 100;
-            g.Revive((uint) newEnergy);
+            g.Revive((uint)newEnergy);
 
             Assert.AreEqual(newEnergy, g.GetEnergy(), "GridFlea's new energy not set by revive");
         }
@@ -280,6 +280,48 @@ namespace GridFleaTests
             GridFlea g = DeadGridFleaFactory();
 
             Assert.IsTrue(g.IsDead(), "GridFlea from DeadGridFleaFactory (Move til out of bounds) is not dead");
+        }
+
+        [TestMethod]
+        public void Move_TilNegativeOutOfBounds_IsDead()
+        {
+            GridFlea g = new GridFlea(x: 0, y: 0);
+
+            Axis direction = g.GetDirection();
+            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            moveAmount++;
+            moveAmount *= -1;
+
+            g.Move(moveAmount);
+
+            Assert.IsTrue(g.IsDead(), "GridFlea past negative bound is not dead");
+        }
+
+        [TestMethod]
+        public void Move_TilOnBounds_IsActive()
+        {
+            GridFlea g = new GridFlea(x: 0, y: 0);
+
+            Axis direction = g.GetDirection();
+            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+
+            g.Move(moveAmount);
+
+            Assert.IsTrue(g.IsActive(), "GridFlea on border is not active");
+        }
+
+        [TestMethod]
+        public void Move_TilOnNegativeBounds_IsActive()
+        {
+            GridFlea g = new GridFlea(x: 0, y: 0);
+
+            Axis direction = g.GetDirection();
+            int moveAmount = direction == Axis.X ? GridFlea.BOUND_X : GridFlea.BOUND_Y;
+            moveAmount *= -1;
+
+            g.Move(moveAmount);
+
+            Assert.IsTrue(g.IsActive(), "GridFlea on negative bound is not active");
         }
 
         [TestMethod]
