@@ -363,7 +363,7 @@ namespace GridFleaTests
             int initReward = 15;
             uint size = 20;
 
-            GridFlea g = new GridFlea(size: size, energy: initReward);
+            GridFlea g = new GridFlea(size: size, reward: initReward);
 
             int expectedChange = 0;
             int expectedValue = (int)(g.GetReward() * g.GetSize() * expectedChange);
@@ -378,7 +378,7 @@ namespace GridFleaTests
             int initX = 50;
             int initY = -25;
 
-            GridFlea g = new GridFlea(x: initX, y: initY, size: size, energy: initReward);
+            GridFlea g = new GridFlea(x: initX, y: initY, size: size, reward: initReward);
             int moveAmount = 3;
             g.Move(moveAmount);
 
@@ -387,6 +387,25 @@ namespace GridFleaTests
             Assert.AreEqual(expectedValue, g.Value(), "GridFlea value not correct after move");
         }
 
+        [TestMethod]
+        public void Value_AfterMultipleMoves_IsNegative()
+        {
+            int initReward = 15;
+            uint size = 20;
+            int initX = 50;
+            int initY = -25;
+
+            GridFlea g = new GridFlea(x: initX, y: initY, size: size, reward: initReward);
+            int moveAmount1 = 3;
+            g.Move(moveAmount1);
+
+            int moveAmount2 = 20;
+            g.Move(moveAmount2);
+
+            int expectedChange = Math.Abs(initX - g.GetX()) + Math.Abs(initY - g.GetY());
+            int expectedValue = (int)(g.GetReward() * g.GetSize() * expectedChange);
+            Assert.AreEqual(expectedValue, g.Value(), "GridFlea value not correct after multiple moves");
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -406,7 +425,6 @@ namespace GridFleaTests
 
 
         // FACTORIES
-        // Tested by `Move_TilNoEnergy_IsInactive`
         private GridFlea InactiveGridFleaFactory()
         {
             GridFlea g = new GridFlea(energy: 1);
@@ -414,8 +432,13 @@ namespace GridFleaTests
             g.Move(1);
             return g;
         }
+        [TestMethod]
+        public void InactiveGridFleaFactory_IsInactive()
+        {
+            GridFlea g = InactiveGridFleaFactory();
+            Assert.IsTrue(g.IsInactive());
+        }
 
-        // Tested by `Move_TilOutOfBounds_IsDead`
         private GridFlea DeadGridFleaFactory()
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
@@ -427,6 +450,12 @@ namespace GridFleaTests
             g.Move(moveAmount); // Move out of bounds (become dead)
 
             return g;
+        }
+        [TestMethod]
+        public void DeadGridFleaFactory_IsDead()
+        {
+            GridFlea g = DeadGridFleaFactory();
+            Assert.IsTrue(g.IsDead());
         }
     }
 }
