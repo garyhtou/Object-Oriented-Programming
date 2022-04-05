@@ -61,6 +61,13 @@ namespace GridFleaTests
             Assert.AreEqual(size, g.GetSize(), "GridFlea size not set by constructor");
         }
 
+        [TestMethod]
+        public void Constructor_IsActive()
+        {
+            GridFlea g = new GridFlea();
+            Assert.IsTrue(g.IsActive(), "default GridFlea is not active");
+        }
+
         // RESET
         [TestMethod]
         public void Reset_SetsEnergy()
