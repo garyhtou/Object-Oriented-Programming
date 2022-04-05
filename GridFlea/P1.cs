@@ -24,7 +24,7 @@ namespace GridFleaNS
             {
                 int id = i + 1;
                 GridFlea flea = fleas[i];
-                Console.WriteLine($"=== Running GridFlea #{id} ===");
+                Console.WriteLine($"======= Running GridFlea #{id} =======");
 
                 AttemptToMove(flea, 10); // Move 10 times
 

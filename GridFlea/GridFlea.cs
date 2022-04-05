@@ -158,7 +158,7 @@ namespace GridFleaNS
                 throw new InvalidOperationException("Can not move a Dead (deactivated) GridFlea");
             }
 
-            int amount = IsActive() ? p : UNENERGETIC_MOVE_AMT;
+            int amount = (IsActive() || p == 0) ? p : UNENERGETIC_MOVE_AMT;
 
             if (direction == Axis.X)
             {
