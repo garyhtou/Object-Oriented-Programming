@@ -86,11 +86,11 @@ namespace GridFleaNS
 
             if (direction == Axis.X)
             {
-                if (x + p > BOUND_X)
+                if (x + amount > BOUND_X)
                 {
                     state = State.Dead;
                 }
-                x += p;
+                x += amount;
             }
             else
             {
@@ -98,7 +98,7 @@ namespace GridFleaNS
                 {
                     state = State.Dead;
                 }
-                y += p;
+                y += amount;
             }
             SwitchDirection();
 

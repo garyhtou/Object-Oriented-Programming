@@ -120,7 +120,7 @@ namespace GridFleaTests
         {
             GridFlea g = InactiveGridFleaFactory();
             g.Reset();
-            Assert.IsTrue(g.IsInactive(), "GridFlea not active after reset");
+            Assert.IsTrue(g.IsActive(), "GridFlea not active after reset");
         }
 
         [TestMethod]
@@ -138,8 +138,8 @@ namespace GridFleaTests
         {
             GridFlea g = InactiveGridFleaFactory();
 
-            uint newEnergy = 100;
-            g.Revive(newEnergy);
+            int newEnergy = 100;
+            g.Revive((uint) newEnergy);
 
             Assert.AreEqual(newEnergy, g.GetEnergy(), "GridFlea's new energy not set by revive");
         }
@@ -203,7 +203,7 @@ namespace GridFleaTests
         {
             int initX = 0;
             int initY = 0;
-            GridFlea g = new GridFlea(x: initX, y: initY, energy: 10);
+            GridFlea g = InactiveGridFleaFactory();
 
             int moveAmount = 10;
 
