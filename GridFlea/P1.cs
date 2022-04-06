@@ -18,6 +18,10 @@ namespace GridFleaNS
             run(fleas);
         }
 
+        private static int MOVE1_TIMES = 10;
+        private static int MOVE2_TIMES = 3;
+        private static int MOVE3_RAND_LO_TIMES = 1;
+        private static int MOVE3_RAND_HI_TIMES = 3;
         static void run(GridFlea[] fleas)
         {
             for (int i = 0; i < fleas.Length; i++)
@@ -26,18 +30,18 @@ namespace GridFleaNS
                 GridFlea flea = fleas[i];
                 Console.WriteLine($"======= Running GridFlea #{id} =======");
 
-                AttemptToMove(flea, 10); // Move 10 times
+                AttemptToMove(flea, MOVE1_TIMES); // Move 10 times
 
                 AttemptToRevive(flea);
 
-                AttemptToMove(flea, 3); // Move 3 times
+                AttemptToMove(flea, MOVE2_TIMES); // Move 3 times
 
                 AttemptToGetValue(flea);
 
                 AttemptToReset(flea);
 
                 Random rand = new Random();
-                int moveTimes = rand.Next(1, 3);
+                int moveTimes = rand.Next(MOVE3_RAND_LO_TIMES, MOVE3_RAND_HI_TIMES);
                 AttemptToMove(flea, moveTimes);
 
                 print($"This flea is currently {flea.GetState()}, located at " +
@@ -49,6 +53,8 @@ namespace GridFleaNS
             }
         }
 
+        private const int MOVE_RAND_LO_AMT = -100;
+        private const int MOVE_RAND_HI_AMT = 300;
         static void AttemptToMove(GridFlea flea, int numTimes = 1)
         {
             foreach (int _ in Enumerable.Range(1, numTimes))
@@ -60,19 +66,20 @@ namespace GridFleaNS
                 }
 
                 Random rand = new Random();
-                int amount = rand.Next(-100, 300);
+                int amount = rand.Next(MOVE_RAND_LO_AMT, MOVE_RAND_HI_AMT);
 
                 flea.Move(amount);
                 print($"Moved to ({flea.GetX()}, {flea.GetY()})");
             }
         }
 
+        private const int REVIVE_ENERGY = 2;
         static void AttemptToRevive(GridFlea flea)
         {
             if (flea.IsInactive())
             {
                 print("Reviving this inactive flea.");
-                flea.Revive(2);
+                flea.Revive(REVIVE_ENERGY);
             }
             else if (flea.IsDead())
             {
@@ -105,6 +112,10 @@ namespace GridFleaNS
             }
         }
 
+        private const int POS_RAND_LIMIT = 500;
+        private const int SIZE_RAND_LIMIT = 20;
+        private const int REWARD_RAND_LIMIT = 1000;
+        private const int ENERGY_RAND_LIMIT = 25;
         static GridFlea[] CreateGridFleas(int num)
         {
             GridFlea[] fleas = new GridFlea[num];
@@ -112,11 +123,11 @@ namespace GridFleaNS
             for (int i = 0; i < fleas.Length; i++)
             {
                 Random rand = new Random();
-                int x = rand.Next(-500, 500);
-                int y = rand.Next(-500, 500);
-                uint size = (uint)rand.Next(0, 20);
-                int reward = rand.Next(0, 1000);
-                int energy = rand.Next(0, 25);
+                int x = rand.Next(-POS_RAND_LIMIT, POS_RAND_LIMIT);
+                int y = rand.Next(-POS_RAND_LIMIT, POS_RAND_LIMIT);
+                uint size = (uint)rand.Next(0, SIZE_RAND_LIMIT);
+                int reward = rand.Next(0, REWARD_RAND_LIMIT);
+                int energy = rand.Next(0, ENERGY_RAND_LIMIT);
 
                 fleas[i] = new GridFlea(x, y, size, reward, energy);
             }

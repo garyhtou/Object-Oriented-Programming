@@ -15,9 +15,9 @@ namespace GridFleaTests
         [TestMethod]
         public void Constructor_SetsEnergy()
         {
-            int energy = 200;
-            GridFlea g = new GridFlea(energy: energy);
-            Assert.AreEqual(energy, g.GetEnergy(), "GridFlea energy not set by constructor");
+            const int ENERGY = 200;
+            GridFlea g = new GridFlea(energy: ENERGY);
+            Assert.AreEqual(ENERGY, g.GetEnergy(), "GridFlea energy not set by constructor");
         }
 
         [TestMethod]
@@ -30,39 +30,41 @@ namespace GridFleaTests
         [TestMethod]
         public void Constructor_NegativeEnergy_IsInactive()
         {
-            GridFlea g = new GridFlea(energy: -10);
+            const int ENERGY = -10;
+            GridFlea g = new GridFlea(energy: ENERGY);
             Assert.IsTrue(g.IsInactive(), "GridFlea not inactive when negative energy");
         }
 
         [TestMethod]
         public void Constructor_PositiveEnergy_IsActive()
         {
-            GridFlea g = new GridFlea(energy: 10);
+            const int ENERGY = 10;
+            GridFlea g = new GridFlea(energy: ENERGY);
             Assert.IsTrue(g.IsActive(), "GridFlea not active when positive energy");
         }
 
         [TestMethod]
         public void Constructor_SetsInitialX()
         {
-            int initX = 15;
-            GridFlea g = new GridFlea(x: initX);
-            Assert.AreEqual(initX, g.GetX(), "GridFlea x position not set by constructor");
+            const int INIT_X = 15;
+            GridFlea g = new GridFlea(x: INIT_X);
+            Assert.AreEqual(INIT_X, g.GetX(), "GridFlea x position not set by constructor");
         }
 
         [TestMethod]
         public void Constructor_SetsInitialY()
         {
-            int initY = 15;
-            GridFlea g = new GridFlea(y: initY);
-            Assert.AreEqual(initY, g.GetY(), "GridFlea y position not set by constructor");
+            const int INIT_Y = 15;
+            GridFlea g = new GridFlea(y: INIT_Y);
+            Assert.AreEqual(INIT_Y, g.GetY(), "GridFlea y position not set by constructor");
         }
 
         [TestMethod]
         public void Constructor_SetsSize()
         {
-            uint size = 200;
-            GridFlea g = new GridFlea(size: size);
-            Assert.AreEqual(size, g.GetSize(), "GridFlea size not set by constructor");
+            const uint SIZE = 200;
+            GridFlea g = new GridFlea(size: SIZE);
+            Assert.AreEqual(SIZE, g.GetSize(), "GridFlea size not set by constructor");
         }
 
         [TestMethod]
@@ -76,43 +78,43 @@ namespace GridFleaTests
         [TestMethod]
         public void Reset_SetsEnergy()
         {
-            int initEnergy = 200;
-            GridFlea g = new GridFlea(energy: initEnergy);
+            const int INIT_ENERGY = 200;
+            GridFlea g = new GridFlea(energy: INIT_ENERGY);
             g.Move(1); // Change energy
             g.Reset();
-            Assert.AreEqual(initEnergy, g.GetEnergy(), "GridFlea energy not set to initial");
+            Assert.AreEqual(INIT_ENERGY, g.GetEnergy(), "GridFlea energy not set to initial");
         }
 
         [TestMethod]
         public void Reset_SetsX()
         {
-            int initX = 20;
-            GridFlea g = new GridFlea(x: initX);
+            const int INIT_X = 20;
+            GridFlea g = new GridFlea(x: INIT_X);
             g.Move(1);
             g.Move(1);
             g.Reset();
-            Assert.AreEqual(initX, g.GetX(), "GridFlea x position not set to initial");
+            Assert.AreEqual(INIT_X, g.GetX(), "GridFlea x position not set to initial");
         }
 
         [TestMethod]
         public void Reset_SetsY()
         {
-            int initY = 20;
-            GridFlea g = new GridFlea(y: initY);
+            const int INIT_Y = 20;
+            GridFlea g = new GridFlea(y: INIT_Y);
             g.Move(1);
             g.Move(1);
             g.Reset();
-            Assert.AreEqual(initY, g.GetY(), "GridFlea y position not set to initial");
+            Assert.AreEqual(INIT_Y, g.GetY(), "GridFlea y position not set to initial");
         }
 
         [TestMethod]
         public void Reset_SetsReward()
         {
-            int initReward = 20;
-            GridFlea g = new GridFlea(reward: initReward);
+            const int INIT_REWARD = 20;
+            GridFlea g = new GridFlea(reward: INIT_REWARD);
             g.Move(1);
             g.Reset();
-            Assert.AreEqual(initReward, g.GetReward(), "GridFlea reward not set to initial");
+            Assert.AreEqual(INIT_REWARD, g.GetReward(), "GridFlea reward not set to initial");
         }
 
         [TestMethod]
@@ -149,10 +151,10 @@ namespace GridFleaTests
         {
             GridFlea g = InactiveGridFleaFactory();
 
-            int newEnergy = 100;
-            g.Revive((uint)newEnergy);
+            const int NEW_ENERGY = 100;
+            g.Revive(NEW_ENERGY);
 
-            Assert.AreEqual(newEnergy, g.GetEnergy(), "GridFlea's new energy not set by revive");
+            Assert.AreEqual(NEW_ENERGY, g.GetEnergy(), "GridFlea's new energy not set by revive");
         }
 
         [TestMethod]
@@ -160,7 +162,8 @@ namespace GridFleaTests
         {
             GridFlea g = InactiveGridFleaFactory();
 
-            g.Revive(100);
+            const int NEW_ENERGY = 100;
+            g.Revive(NEW_ENERGY);
 
             Assert.IsTrue(g.IsActive(), "GridFlea's not active after revive");
         }
@@ -171,7 +174,8 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea();
 
-            g.Revive(10);
+            const int NEW_ENERGY = 10;
+            g.Revive(NEW_ENERGY);
         }
 
         [TestMethod]
@@ -180,83 +184,87 @@ namespace GridFleaTests
         {
             GridFlea g = DeadGridFleaFactory();
 
-            g.Revive(10);
+            const int NEW_ENERGY = 10;
+            g.Revive(NEW_ENERGY);
         }
 
         // MOVE
         [TestMethod]
         public void Move_WithActive_MovesP()
         {
-            int initX = 0;
-            int initY = 0;
-            GridFlea g = new GridFlea(x: initX, y: initY, energy: 10);
+            const int INIT_X = 0;
+            const int INIT_Y = 0;
+            const int INIT_ENERGY = 0;
+            GridFlea g = new GridFlea(x: INIT_X, y: INIT_Y, energy: INIT_ENERGY);
 
-            int moveAmount = 10;
+            const int MOVE_AMOUNT = 10;
 
             GridFlea.Axis direction = g.GetDirection();
-            g.Move(moveAmount);
+            g.Move(MOVE_AMOUNT);
 
             int movedAmount;
             if (direction == GridFlea.Axis.X)
             {
-                movedAmount = g.GetX() - initX;
+                movedAmount = g.GetX() - INIT_X;
             }
             else
             {
-                movedAmount = g.GetY() - initY;
+                movedAmount = g.GetY() - INIT_Y;
             }
 
-            Assert.AreEqual(moveAmount, movedAmount, "Active GridFlea did not move P squares");
+            Assert.AreEqual(MOVE_AMOUNT, movedAmount, "Active GridFlea did not move P squares");
         }
 
         [TestMethod]
         public void Move_WithInactive_Move1()
         {
-            int initX = 0;
-            int initY = 0;
+            const int INIT_X = 0;
+            const int INIT_Y = 0;
             GridFlea g = InactiveGridFleaFactory();
 
-            int moveAmount = 10;
+            const int MOVE_AMOUNT = 10;
 
             GridFlea.Axis direction = g.GetDirection();
-            g.Move(moveAmount);
+            g.Move(MOVE_AMOUNT);
 
             int movedAmount;
             if (direction == GridFlea.Axis.X)
             {
-                movedAmount = g.GetX() - initX;
+                movedAmount = g.GetX() - INIT_X;
             }
             else
             {
-                movedAmount = g.GetY() - initY;
+                movedAmount = g.GetY() - INIT_Y;
             }
 
-            Assert.AreEqual(1, movedAmount, "Inactive GridFlea did not move 1 square");
+            const int EXPECTED = 1;
+            Assert.AreEqual(EXPECTED, movedAmount, "Inactive GridFlea did not move 1 square");
         }
 
         [TestMethod]
         public void Move_WithNegative_GoesBackwards()
         {
-            int initX = 0;
-            int initY = 0;
-            GridFlea g = new GridFlea(x: initX, y: initY, energy: 10);
+            const int INIT_X = 0;
+            const int INIT_Y = 0;
+            const int INIT_ENERGY = 10;
+            GridFlea g = new GridFlea(x: INIT_X, y: INIT_Y, energy: INIT_ENERGY);
 
-            int moveAmount = -10;
+            const int MOVE_AMOUNT = -10;
 
             GridFlea.Axis direction = g.GetDirection();
-            g.Move(moveAmount);
+            g.Move(MOVE_AMOUNT);
 
             int movedAmount;
             if (direction == GridFlea.Axis.X)
             {
-                movedAmount = g.GetX() - initX;
+                movedAmount = g.GetX() - INIT_X;
             }
             else
             {
-                movedAmount = g.GetY() - initY;
+                movedAmount = g.GetY() - INIT_Y;
             }
 
-            Assert.AreEqual(moveAmount, movedAmount, "GridFlea moved with negative square did not go backwards");
+            Assert.AreEqual(MOVE_AMOUNT, movedAmount, "GridFlea moved with negative square did not go backwards");
         }
 
         [TestMethod]
@@ -331,25 +339,25 @@ namespace GridFleaTests
         [TestMethod]
         public void Move_UpdatesReward()
         {
-            int initReward = 10;
-            GridFlea g = new GridFlea(reward: initReward);
-            int moveAmount = 3;
-            g.Move(moveAmount);
+            const int INIT_REWARD = 10;
+            GridFlea g = new GridFlea(reward: INIT_REWARD);
+            const int MOVE_AMOUNT = 3;
+            g.Move(MOVE_AMOUNT);
 
-            int expectedReward = initReward - moveAmount;
+            int expectedReward = INIT_REWARD - MOVE_AMOUNT;
             Assert.AreEqual(expectedReward, g.GetReward(), "GridFlea move does not update reward");
         }
 
         [TestMethod]
         public void Move_DecrementEnergy()
         {
-            int initEnergy = 10;
-            GridFlea g = new GridFlea(energy: initEnergy);
-            int moveAmount = 3;
-            g.Move(moveAmount);
+            const int INIT_ENERGY = 10;
+            GridFlea g = new GridFlea(energy: INIT_ENERGY);
+            const int MOVE_AMOUNT = 3;
+            g.Move(MOVE_AMOUNT);
 
-            int expectedEnergy = initEnergy - 1;
-            Assert.AreEqual(expectedEnergy, g.GetEnergy(), "GridFlea move does not decrement energy");
+            const int EXPECTED = INIT_ENERGY - 1;
+            Assert.AreEqual(EXPECTED, g.GetEnergy(), "GridFlea move does not decrement energy");
         }
 
         [TestMethod]
@@ -364,10 +372,10 @@ namespace GridFleaTests
         [TestMethod]
         public void Value_BeforeMove()
         {
-            int initReward = 15;
-            uint size = 20;
+            const int INIT_REWARD = 15;
+            const uint SIZE = 20;
 
-            GridFlea g = new GridFlea(size: size, reward: initReward);
+            GridFlea g = new GridFlea(size: SIZE, reward: INIT_REWARD);
 
             int expectedChange = 0;
             int expectedValue = (int)(g.GetReward() * g.GetSize() * expectedChange);
@@ -377,16 +385,16 @@ namespace GridFleaTests
         [TestMethod]
         public void Value_AfterMove()
         {
-            int initReward = 15;
-            uint size = 20;
-            int initX = 50;
-            int initY = -25;
+            const int INIT_REWARD = 15;
+            const uint SIZE = 20;
+            const int INIT_X = 50;
+            const int INIT_Y = -25;
 
-            GridFlea g = new GridFlea(x: initX, y: initY, size: size, reward: initReward);
-            int moveAmount = 3;
-            g.Move(moveAmount);
+            GridFlea g = new GridFlea(x: INIT_X, y: INIT_Y, size: SIZE, reward: INIT_REWARD);
+            const int MOVE_AMOUNT = 3;
+            g.Move(MOVE_AMOUNT);
 
-            int expectedChange = Math.Abs(initX - g.GetX()) + Math.Abs(initY - g.GetY());
+            int expectedChange = Math.Abs(INIT_X - g.GetX()) + Math.Abs(INIT_Y - g.GetY());
             int expectedValue = (int)(g.GetReward() * g.GetSize() * expectedChange);
             Assert.AreEqual(expectedValue, g.Value(), "GridFlea value not correct after move");
         }
@@ -394,19 +402,19 @@ namespace GridFleaTests
         [TestMethod]
         public void Value_AfterMultipleMoves_IsNegative()
         {
-            int initReward = 15;
-            uint size = 20;
-            int initX = 50;
-            int initY = -25;
+            const int INIT_REWARD = 15;
+            const uint SIZE = 20;
+            const int INIT_X = 50;
+            const int INIT_Y = -25;
 
-            GridFlea g = new GridFlea(x: initX, y: initY, size: size, reward: initReward);
-            int moveAmount1 = 3;
-            g.Move(moveAmount1);
+            GridFlea g = new GridFlea(x: INIT_X, y: INIT_Y, size: SIZE, reward: INIT_REWARD);
+            const int MOVE_AMOUNT1 = 3;
+            g.Move(MOVE_AMOUNT1);
 
-            int moveAmount2 = 20;
-            g.Move(moveAmount2);
+            const int MOVE_AMOUNT2 = 20;
+            g.Move(MOVE_AMOUNT2);
 
-            int expectedChange = Math.Abs(initX - g.GetX()) + Math.Abs(initY - g.GetY());
+            int expectedChange = Math.Abs(INIT_X - g.GetX()) + Math.Abs(INIT_Y - g.GetY());
             int expectedValue = (int)(g.GetReward() * g.GetSize() * expectedChange);
             Assert.AreEqual(expectedValue, g.Value(), "GridFlea value not correct after multiple moves");
         }
