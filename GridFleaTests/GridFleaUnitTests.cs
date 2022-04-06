@@ -114,8 +114,7 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            int moveAmount = GRID_BOUND;
-            moveAmount++;
+            int moveAmount = GRID_BOUND + 1;
             moveAmount *= -1;
 
             g.Move(moveAmount);
@@ -191,9 +190,7 @@ namespace GridFleaTests
         {
             GridFlea g = new GridFlea(x: 0, y: 0);
 
-            int moveAmount = GRID_BOUND;
-            moveAmount++;
-
+            int moveAmount = GRID_BOUND + 1;
             g.Move(moveAmount); // Move out of bounds (become dead)
 
             return g;
