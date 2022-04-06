@@ -44,11 +44,7 @@ namespace GridFleaNS
                 int moveTimes = rand.Next(MOVE3_RAND_LO_TIMES, MOVE3_RAND_HI_TIMES);
                 AttemptToMove(flea, moveTimes);
 
-                print($"This flea is currently {flea.GetState()}, located at " +
-                        $"({flea.GetX()}, {flea.GetY()}), facing in the " +
-                        $"{flea.GetDirection()}-axis, has a size of " +
-                        $"{flea.GetSize()}, energy of {flea.GetEnergy()}, " +
-                        $"and reward of {flea.GetReward()}.");
+                print($"This flea is currently {flea.GetState()}");
                 Console.WriteLine($"=== Finished Running GridFlea #{id} ===\n\n");
             }
         }
@@ -57,11 +53,11 @@ namespace GridFleaNS
         private const int MOVE_RAND_HI_AMT = 300;
         static void AttemptToMove(GridFlea flea, int numTimes = 1)
         {
+            int timesMoved = 0;
             foreach (int _ in Enumerable.Range(1, numTimes))
             {
                 if (flea.IsDead())
                 {
-                    print("Skipping move, this flea is dead.");
                     break;
                 }
 
@@ -69,7 +65,15 @@ namespace GridFleaNS
                 int amount = rand.Next(MOVE_RAND_LO_AMT, MOVE_RAND_HI_AMT);
 
                 flea.Move(amount);
-                print($"Moved to ({flea.GetX()}, {flea.GetY()})");
+                timesMoved++;
+            }
+            if (timesMoved > 0)
+            {
+                print($"Moved {timesMoved} times.");
+            }
+            if (timesMoved < numTimes)
+            {
+                print("Skipping move, this flea is Dead.");
             }
         }
 
@@ -83,7 +87,7 @@ namespace GridFleaNS
             }
             else if (flea.IsDead())
             {
-                print("Can't revive flea since it's dead.");
+                print("Can't revive flea since it's Dead.");
             }
         }
 
@@ -108,7 +112,7 @@ namespace GridFleaNS
             }
             else
             {
-                print("Can't reset flea since it's dead.");
+                print("Can't reset flea since it's Dead.");
             }
         }
 

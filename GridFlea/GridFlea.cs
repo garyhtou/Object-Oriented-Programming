@@ -18,21 +18,20 @@
 // =============================================================================
 // --------------------------- INTERFACE INVARIANTS ----------------------------
 // =============================================================================
-// `GridFlea` (constructor): Create a GridFlea. Default values are provided.
-// `Move`: Moves the GridFlea a number of squares in the current direction.
-// `Reset`: Reset the GridFlea to it's initial values/state.
-// `Revive`: Set the GridFlea's state back to Active with a certain energy.
-// `Value`: Gets the value of the GridFlea.
-// `GetState`: Gets the state of the GridFlea. (See the State enum)
-// `IsActive`: Whether the GridFlea is in an Active state.
-// `IsInactive`: Whether the GridFlea is in an Inactive state.
-// `IsDead`: Whether the GridFlea is in a Dead state.
-// `GetX`: Gets the x position. This will change as the GridFlea moves.
-// `GetY`: Gets the y position. This will chnage as the GridFlea moves.
-// `GetEnergy`: Gets the energy. This will decrease as the GridFlea moves.
-// `GetSize`: Gets the size of the GridFlea. This will never change.
-// `GetDirection`: Gets the direction of the GridFlea. (See the Axis enum)
-// `GetReward`: Gets the reward. This will decrease as the GridFlea moves.
+// The constructor allows for the creation of Active, Inactive, and Dead
+// GridFleas since there are scenarios where a client may want an Inactive
+// or Dead GridFlea right off the bat. If a GridFlea was intialized with
+// values which result in an Inactive/Dead state, resetting the GridFlea
+// will bring it back to it's original Inactive/Dead state. Default values
+// are provided for the constructor.
+//
+// The GridFlea class provides multiple methods for retriving the state of the
+// GridFlea. You can either use the `GetState()` method which returns a value
+// from the `State` enum (Active, Inactive, Dead). Or, the GridFlea class also
+// provides boolean methods for each state as syntatic sugar.
+//   - `IsActive()`: Whether the GridFlea is in an Active state.
+//   - `IsInactive()`: Whether the GridFlea is in an Inactive state.
+//   - `IsDead()`: Whether the GridFlea is in a Dead state.
 
 
 using System;
@@ -41,8 +40,8 @@ namespace GridFleaNS
 {
     public class GridFlea
     {
-        public const int BOUND_X = 1_000;
-        public const int BOUND_Y = 1_000;
+        private const int BOUND_X = 1_000;
+        private const int BOUND_Y = 1_000;
         private const int UNENERGETIC_MOVE_AMT = 1;
 
         private readonly uint size;
@@ -66,7 +65,7 @@ namespace GridFleaNS
         }
         State state;
 
-        public enum Axis
+        private enum Axis
         {
             X,
             Y
@@ -92,7 +91,7 @@ namespace GridFleaNS
 
         /// PreConditions: Gridflea must NOT be Dead
         /// PostConditions: Same state as when the GridFlea was initialized. See
-        ///   GridFlea constructor for more details.
+        ///   GridFlea constructor for more details (above).
         public void Reset()
         {
             if (IsDead())
@@ -207,48 +206,6 @@ namespace GridFleaNS
         public bool IsDead()
         {
             return GetState() == State.Dead;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public int GetX()
-        {
-            return x;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public int GetY()
-        {
-            return y;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public int GetEnergy()
-        {
-            return energy;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public uint GetSize()
-        {
-            return size;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public Axis GetDirection()
-        {
-            return direction;
-        }
-
-        /// PreConditions: none
-        /// PostConditions: none
-        public int GetReward()
-        {
-            return reward;
         }
 
         // PRIVATE METHODS
