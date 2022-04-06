@@ -73,20 +73,11 @@ namespace GridFleaNS
         }
         Axis direction;
 
-        /// <summary>
-        /// Creates a GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions:
         ///   - An Active Gridflea
         ///   - An Inative Gridflea (if energy <= 0)
         ///   - A Dead GridFlea (if initial x/y is outside of bounds)
-        /// </summary>
-        /// <param name="x">Initial x position</param>
-        /// <param name="y">Initial y position</param>
-        /// <param name="size">Size of GridFlea</param>
-        /// <param name="reward">Initial reward</param>
-        /// <param name="energy">Initial energy</param>
         public GridFlea(int x = 0, int y = 0, uint size = 10, int reward = 10, int energy = 10)
         {
             initX = x;
@@ -99,13 +90,9 @@ namespace GridFleaNS
             Setup();
         }
 
-        /// <summary>
-        /// Resets a GridFlea by bringing it back to its initial values/state.
-        ///
         /// PreConditions: Gridflea must NOT be Dead
         /// PostConditions: Same state as when the GridFlea was initialized. See
         ///   GridFlea constructor for more details.
-        /// </summary>
         public void Reset()
         {
             if (IsDead())
@@ -116,16 +103,8 @@ namespace GridFleaNS
             Setup();
         }
 
-        /// <summary>
-        /// Revives an inactive GridFlea by providing it more energy. All other
-        ///   variables such as x/y position will remain the same.
-        ///
         /// PreConditions: GridFlea is Inactive
         /// PostConditions: GridFlea is Active
-        /// </summary>
-        /// <param name="energy">
-	    /// The amount of energy which this GridFlea should now possess.
-	    /// </param>
         public void Revive(uint energy)
         {
             if (!IsInactive())
@@ -138,10 +117,6 @@ namespace GridFleaNS
         }
 
 
-        /// <summary>
-        /// Moves a GridFlea a certain number of square (p) in the current
-	    ///   direction.
-	    ///
 	    /// PreConditions: GridFlea is NOT Dead
 	    /// PostConditions:
         ///   - GridFlea is Active (if X/Y are both on or within the bounds, and
@@ -149,8 +124,6 @@ namespace GridFleaNS
         ///   - GridFlea is Inactive (if X/Y are both on or within the bounds,
 	    ///       and energy <= 0)
         ///   - GridFlea is Dead (if either X/Y are outside the bounds)
-        /// </summary>
-        /// <param name="p">The number of square to move</param>
         public void Move(int p)
         {
             if (IsDead())
@@ -182,13 +155,8 @@ namespace GridFleaNS
             energy--;
         }
 
-        /// <summary>
-        /// Gets the Value of the GridFlea.
-        ///
         /// PreConditions: GridFlea is Active
         /// PostConditions: none (GridFlea remains in the same state)
-        /// </summary>
-        /// <returns>Value of the GridFlea</returns>
         public int Value()
         {
             if (!IsActive())
@@ -199,13 +167,8 @@ namespace GridFleaNS
             return reward * (int)size * GetChange();
         }
 
-        /// <summary>
-        /// Gets the state of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>State of the GridFlea</returns>
         public State GetState()
         {
             // State transitions
@@ -225,109 +188,64 @@ namespace GridFleaNS
             return state;
         }
 
-        /// <summary>
-        /// Whether the GridFlea is an Active state.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>Whether the GridFlea is an Active state</returns>
         public bool IsActive()
         {
             return GetState() == State.Active;
         }
 
-        /// <summary>
-        /// Whether the GridFlea is an Inactive state
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>Whether the GridFlea is an Inactive state</returns>
         public bool IsInactive()
         {
             return GetState() == State.Inactive;
         }
 
-        /// <summary>
-        /// Whether the GridFlea is a Dead state
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>Whether the GridFlea is a Dead state</returns>
         public bool IsDead()
         {
             return GetState() == State.Dead;
         }
 
-        /// <summary>
-        /// Gets the x position of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>x position</returns>
         public int GetX()
         {
             return x;
         }
 
-        /// <summary>
-        /// Gets the y position of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>y position</returns>
         public int GetY()
         {
             return y;
         }
 
-        /// <summary>
-        /// Gets the energy of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>energy</returns>
         public int GetEnergy()
         {
             return energy;
         }
 
-        /// <summary>
-        /// Gets the size of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>size</returns>
         public uint GetSize()
         {
             return size;
         }
 
-        /// <summary>
-        /// Gets the direction of travel for the next move of this GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>direction (an Axis)</returns>
         public Axis GetDirection()
         {
             return direction;
         }
 
-        /// <summary>
-        /// Gets the reward of the GridFlea.
-        ///
         /// PreConditions: none
         /// PostConditions: none
-        /// </summary>
-        /// <returns>reward</returns>
         public int GetReward()
         {
             return reward;
