@@ -11,7 +11,6 @@ all: p1
 
 p1: $(OBJ)
 	$(CXX) -o $@ $(OBJ)
-	rm -f DISK
 %.o:	%.cpp $(HDR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
