@@ -408,3 +408,5 @@ ASALocalRun/
 # C++
 
 *.o
+
+/P2/P2
