@@ -1,64 +1,72 @@
+// Gary Tou
+// April 6th, 2022
+// CPSC 3200, P2
+
+#ifndef GRIDFLEA_H
+#define GRIDFLEA_H
 
 using namespace std;
 
-class GridFlea
-{
+class GridFlea {
 public:
-	enum State
-	{
-		Active,
-		Inactive,
-		Dead
-	};
+    enum State {
+        Active,
+        Inactive,
+        Dead
+    };
 
-	GridFlea(int x = 0, int y = 0, unsigned int size = 10, int reward = 10, int energy = 1);
+    GridFlea(int x = 0, int y = 0, unsigned int size = 10, int reward = 10, int energy = 1);
 
-	void reset();
+    void reset();
 
-	void revive(unsigned int energy);
+    void revive(unsigned int energy);
 
-	void move(int p);
+    void move(int p);
 
-	int value();
+    int value();
 
-	State getState();
-	bool isActive();
-	bool isInactive();
-	bool isDead();
+    State getState();
+
+    bool isActive();
+
+    bool isInactive();
+
+    bool isDead();
 
 private:
-	static const int BOUND_X = 1000;
-	static const int BOUND_Y = 1000;
-	static const int UNENERGETIC_MOVE_AMT = 1;
+    static const int BOUND_X = 1000;
+    static const int BOUND_Y = 1000;
+    static const int UNENERGETIC_MOVE_AMT = 1;
 
-	unsigned int size;
+    unsigned int size;
 
-	int initX;
-	int initY;
+    int initX;
+    int initY;
 
-	int x;
-	int y;
+    int x;
+    int y;
 
-	int initReward;
-	int reward;
+    int initReward;
+    int reward;
 
-	int initEnergy;
-	int energy;
+    int initEnergy;
+    int energy;
 
-	State state = Active;
+    State state = Active;
 
-	enum Axis
-	{
-		X,
-		Y
-	};
-	Axis direction;
+    enum Axis {
+        X,
+        Y
+    };
+    Axis direction;
 
-	void setup();
+    void setup();
 
-	int getChange();
+    int getChange();
 
-	bool isOutOfBounds();
+    bool isOutOfBounds();
 
-	void switchDirection();
+    void switchDirection();
 };
+
+#endif

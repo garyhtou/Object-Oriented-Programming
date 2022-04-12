@@ -1,3 +1,10 @@
+// Gary Tou
+// April 6th, 2022
+// CPSC 3200, P2
+
+#ifndef INFEST_H
+#define INFEST_H
+
 using namespace std;
 
 #include "GridFlea.h"
@@ -7,6 +14,9 @@ class Infest
 public:
 	Infest(unsigned int severity);
 	~Infest();
+
+    // Move semantic
+    // Copy constructor
 
 	void move(int p);
 
@@ -21,5 +31,7 @@ private:
 
 	void reproduce();
 
-	int reduce(int value, GridFlea flea);
+    GridFlea birthGridFlea(int index);
 };
+
+#endif

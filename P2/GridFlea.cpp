@@ -1,6 +1,12 @@
+// Gary Tou
+// April 6th, 2022
+// CPSC 3200, P2
+
+// Revision History:
+// - April 6th, 2020: Port GridFlea from C# to C++
+
 #include <stdexcept>
 #include <cmath>
-
 #include "GridFlea.h"
 
 GridFlea::GridFlea(int x, int y, unsigned int size, int reward, int energy)
