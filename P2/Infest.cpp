@@ -117,7 +117,7 @@ GridFlea *Infest::birthGridFlea(int nonce) const {
     int y = ((val * 3) % (int) (nonce * negative * sin(nonce)));
     unsigned int size = (val * 7 + severity) % x;
     int reward = (int) (((val * 37 + x) % (int) (pow(nonce, 1.5) / severity + nonce)) * sin(x));
-    int energy = (int) (((val * 3 + x) % (int) sqrt(nonce * 97)) * pow(negative, 1.99 * nonce));
+    int energy = (int) (((val * 3 + y) % (int) sqrt(nonce * 97)) * pow(negative, 1.99 * nonce));
 
     return new GridFlea(x, y, size, reward, energy);
 }
