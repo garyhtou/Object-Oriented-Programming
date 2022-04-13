@@ -39,8 +39,8 @@ void GridFlea::revive(unsigned int energy) {
 }
 
 void GridFlea::move(int p) {
-    if (isDead()) {
-        throw invalid_argument("Can not move a Dead (deactivated) GridFlea");
+    if (!isActive()) {
+        throw invalid_argument("Can not move an Inactive or Dead (deactivated) GridFlea");
     }
 
     int amount = (isEnergetic() || p == 0) ? p : UNENERGETIC_MOVE_AMT;
