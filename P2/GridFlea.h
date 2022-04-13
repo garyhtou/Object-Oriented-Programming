@@ -62,9 +62,9 @@ private:
 
     void setup();
 
-    int getChange();
+    int getChange() const;
 
-    bool isOutOfBounds();
+    bool isOutOfBounds() const;
 
     bool isEnergetic() const;
 

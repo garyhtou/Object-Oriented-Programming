@@ -126,12 +126,12 @@ void GridFlea::setup()
 	direction = X;
 }
 
-int GridFlea::getChange()
+int GridFlea::getChange() const
 {
 	return abs(initX - x) + abs(initY - y);
 }
 
-bool GridFlea::isOutOfBounds()
+bool GridFlea::isOutOfBounds() const
 {
 	return abs(x) > BOUND_X || abs(y) > BOUND_Y;
 }
