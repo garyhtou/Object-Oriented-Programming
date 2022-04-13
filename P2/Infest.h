@@ -9,29 +9,32 @@ using namespace std;
 
 #include "GridFlea.h"
 
-class Infest
-{
+class Infest {
 public:
-	Infest(unsigned int severity);
-	~Infest();
+    Infest(unsigned int severity);
+
+    ~Infest();
 
     // Move semantic
     // Copy constructor
 
-	void move(int p);
+    void move(int p);
 
-	int minValue();
-	int maxValue();
+    int minValue();
+
+    int maxValue();
 
 private:
-	unsigned int severity;
+    unsigned int severity;
 
-	GridFlea *fleas;
-	unsigned int generations = 0;
+    GridFlea **fleas = nullptr;
+    unsigned int generations = 0;
 
-	void reproduce();
+    void reproduce();
 
-    GridFlea birthGridFlea(int index);
+    GridFlea *birthGridFlea(int index) const;
+
+    GridFlea getGridFlea(int index) const;
 };
 
 #endif

@@ -14,13 +14,15 @@ Infest::Infest(unsigned int severity) {
     }
     this->severity = severity;
 
-    this->fleas = new GridFlea[this->severity];
-    for (int i = 0; i < severity; i++) {
+    for (int i = 0; i < this->severity; i++) {
         fleas[i] = birthGridFlea(i);
     }
 }
 
 Infest::~Infest() {
+    for (int i = 0; i < severity; i++) {
+        delete fleas[i];
+    }
     delete[] fleas;
 }
 
@@ -28,7 +30,7 @@ void Infest::move(int p) {
     bool moved = false;
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = fleas[i];
+        GridFlea flea = getGridFlea(i);
 
         if (!flea.isDead()) {
             flea.move(p);
@@ -46,7 +48,7 @@ int Infest::minValue() {
     bool first = true;
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = fleas[i];
+        GridFlea flea = getGridFlea(i);
 
         if (first) {
             currMin = flea.value();
@@ -64,7 +66,7 @@ int Infest::maxValue() {
     bool first = true;
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = fleas[i];
+        GridFlea flea = getGridFlea(i);
 
         if (first) {
             currMax = flea.value();
@@ -77,14 +79,20 @@ int Infest::maxValue() {
     return currMax;
 }
 
-GridFlea Infest::birthGridFlea(int nonce) {
-    int val = nonce * (int) severity;
 
-    int x = val % (2 * nonce) * (int) pow(-1, nonce);
-    int y = val % (3 * nonce) * (int) pow(-1, nonce);
+GridFlea *Infest::birthGridFlea(int nonce) const {
+    int val = nonce * ((int) severity + 5) % 10;
+    int negative = (int) pow(-1, nonce);
+
+    int x = val % (2 * nonce) * negative;
+    int y = val % (3 * nonce) * negative;
     unsigned int size = val % (4 * nonce) * x;
     int reward = val % (5 * nonce) * y;
     int energy = val % (6 * nonce) + x + y;
 
-    return GridFlea(x, y, size, reward, energy);
+    return new GridFlea(x, y, size, reward, energy);
+}
+
+GridFlea Infest::getGridFlea(int index) const {
+    return *fleas[index];
 }
