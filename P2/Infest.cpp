@@ -14,6 +14,7 @@ Infest::Infest(unsigned int severity) {
     }
     this->severity = severity;
 
+    fleas = new GridFlea *[severity];
     for (int i = 0; i < this->severity; i++) {
         fleas[i] = birthGridFlea(i);
     }

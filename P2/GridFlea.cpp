@@ -34,7 +34,7 @@ void GridFlea::revive(unsigned int energy) {
         throw invalid_argument("Can not revive an Active or Dead (deactivated) GridFlea");
     }
 
-    this->energy = energy;
+    this->energy = (int) energy;
     state = Active;
 }
 
