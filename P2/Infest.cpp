@@ -109,7 +109,7 @@ void Infest::validatePopulation() {
 GridFlea *Infest::birthGridFlea(int nonce) const {
     // Arbitrary formulas for creating GridFleas with a wide distribution of initial values.
     // https://www.desmos.com/calculator/fnzcs8g0jt
-    nonce++;
+    nonce += 2;
     int val = (((int) severity + 11) % (nonce * 97)) * (nonce % 7) + nonce;
     int negative = (int) (pow(-1, nonce) * pow(-1, val));
 
