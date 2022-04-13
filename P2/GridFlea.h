@@ -66,6 +66,8 @@ private:
 
     bool isOutOfBounds();
 
+    bool isEnergetic() const;
+
     void switchDirection();
 };
 

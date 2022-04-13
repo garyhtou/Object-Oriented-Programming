@@ -3,7 +3,8 @@
 // CPSC 3200, P2
 
 // Revision History:
-// - April 6th, 2020: Port GridFlea from C# to C++
+// - April 6th, 2022: Port GridFlea from C# to C++
+// - April 12th, 2022: Add an isEnergetic query method to separate some state logic from Active/Inactive/Dead
 
 #include <stdexcept>
 #include <cmath>
@@ -49,7 +50,7 @@ void GridFlea::move(int p)
 		throw invalid_argument("Can not move a Dead (deactivated) GridFlea");
 	}
 
-	int amount = (isActive() || p == 0) ? p : UNENERGETIC_MOVE_AMT;
+	int amount = (isEnergetic() || p == 0) ? p : UNENERGETIC_MOVE_AMT;
 
 	if (direction == X)
 	{
@@ -86,15 +87,14 @@ int GridFlea::value()
 
 GridFlea::State GridFlea::getState()
 {
-	if (state == Active && energy <= 0)
+	if (state == Active && !isEnergetic())
 	{
 		state = Inactive;
 	}
-	else if (state == Inactive && energy > 0)
+	else if (state == Inactive && isEnergetic())
 	{
 		state = Active;
-	}
-	else if (state != Dead && isOutOfBounds())
+	} else if (state != Dead && isOutOfBounds())
 	{
 		state = Dead;
 	}
@@ -134,6 +134,11 @@ int GridFlea::getChange()
 bool GridFlea::isOutOfBounds()
 {
 	return abs(x) > BOUND_X || abs(y) > BOUND_Y;
+}
+
+bool GridFlea::isEnergetic() const
+{
+    return energy > 0;
 }
 
 void GridFlea::switchDirection()
