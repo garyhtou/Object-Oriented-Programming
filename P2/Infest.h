@@ -11,12 +11,13 @@ using namespace std;
 
 class Infest {
 public:
+    //
     Infest(unsigned int severity);
 
     ~Infest();
 
-    // Move semantic
-    // Copy constructor
+    Infest(const Infest &src);
+    Infest(Infest &&src);
 
     void move(int p);
 
@@ -25,12 +26,21 @@ public:
     int maxValue();
 
 private:
+    const unsigned int REVIVE_ENERGY = 10;
     unsigned int severity;
 
     GridFlea **fleas = nullptr;
-    unsigned int generations = 0;
+
+    enum Extreme {
+        MIN,
+        MAX
+    };
+
+    int extremeValue(Extreme e);
 
     void reproduce();
+
+    void validatePopulation();
 
     GridFlea *birthGridFlea(int index) const;
 

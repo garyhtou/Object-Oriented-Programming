@@ -26,69 +26,98 @@ Infest::~Infest() {
     delete[] fleas;
 }
 
+
 void Infest::move(int p) {
-    bool moved = false;
+    validatePopulation();
 
     for (int i = 0; i < severity; i++) {
         GridFlea flea = getGridFlea(i);
 
-        if (!flea.isDead()) {
+        if (flea.isActive()) {
             flea.move(p);
-            moved = true;
         }
-    }
-
-    if (!moved) {
-        // TODO: reproduce or error?
     }
 }
 
 int Infest::minValue() {
-    int currMin = 0;
-    bool first = true;
-
-    for (int i = 0; i < severity; i++) {
-        GridFlea flea = getGridFlea(i);
-
-        if (first) {
-            currMin = flea.value();
-            first = false;
-        } else {
-            currMin = min(currMin, flea.value());
-        }
-    }
-
-    return currMin;
+    validatePopulation();
+    return extremeValue(MIN);
 }
 
 int Infest::maxValue() {
-    int currMax = 0;
+    validatePopulation();
+    return extremeValue(MAX);
+}
+
+int Infest::extremeValue(Extreme e) {
+    int currExtreme = 0;
     bool first = true;
 
     for (int i = 0; i < severity; i++) {
         GridFlea flea = getGridFlea(i);
 
         if (first) {
-            currMax = flea.value();
+            currExtreme = flea.value();
             first = false;
-        } else {
-            currMax = min(currMax, flea.value());
+        } else if (MIN == e) {
+            currExtreme = std::min(currExtreme, flea.value());
+        } else if (MAX == e) {
+            currExtreme = std::max(currExtreme, flea.value());
         }
     }
 
-    return currMax;
+    return currExtreme;
+}
+
+void Infest::reproduce() {
+    for (int i = 0; i < severity; i++) {
+        GridFlea flea = getGridFlea(i);
+
+        if (flea.isInactive()) {
+            flea.revive(REVIVE_ENERGY);
+        } else if (flea.isDead()) {
+            // Replace the GridFlea with a new one
+            delete fleas[i];
+            fleas[i] = birthGridFlea(i);
+        }
+    }
+}
+
+void Infest::validatePopulation() {
+    const int THRESHOLD = round(severity / 2);
+    unsigned int deadCount = 0;
+
+    for (int i = 0; i < severity; i++) {
+        GridFlea flea = getGridFlea(i);
+
+        if (flea.isDead()) {
+            deadCount++;
+        }
+
+        // Optimized for performance
+        if (deadCount > THRESHOLD) {
+            break;
+        }
+    }
+
+    if (deadCount > THRESHOLD) {
+        reproduce();
+    }
 }
 
 
 GridFlea *Infest::birthGridFlea(int nonce) const {
-    int val = nonce * ((int) severity + 5) % 10;
-    int negative = (int) pow(-1, nonce);
+    // Arbitrary formulas for creating GridFleas with a wide distribution of initial values.
+    // https://www.desmos.com/calculator/fnzcs8g0jt
+    nonce++;
+    int val = (((int) severity + 11) % (nonce * 97)) * (nonce % 7) + nonce;
+    int negative = (int) (pow(-1, nonce) * pow(-1, val));
 
-    int x = val % (2 * nonce) * negative;
-    int y = val % (3 * nonce) * negative;
-    unsigned int size = val % (4 * nonce) * x;
-    int reward = val % (5 * nonce) * y;
-    int energy = val % (6 * nonce) + x + y;
+    int x = ((val * 3) % (int) (nonce * negative * cos(nonce)));
+    int y = ((val * 3) % (int) (nonce * negative * sin(nonce)));
+    unsigned int size = (val * 7 + severity) % x;
+    int reward = (int) (((val * 37 + x) % (int) (pow(nonce, 1.5) / severity + nonce)) * sin(x));
+    int energy = (int) (((val * 3 + x) % (int) sqrt(nonce * 97)) * pow(negative, 1.99 * nonce));
 
     return new GridFlea(x, y, size, reward, energy);
 }
