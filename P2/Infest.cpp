@@ -20,13 +20,32 @@ Infest::Infest(unsigned int severity) {
     }
 }
 
-Infest::~Infest() {
-    for (int i = 0; i < severity; i++) {
-        delete fleas[i];
-    }
-    delete[] fleas;
+Infest::Infest(const Infest &src) {
+    copySemantic(src);
 }
 
+Infest::Infest(Infest &&src) {
+    swap(src, true);
+}
+
+Infest &Infest::operator=(const Infest &src) {
+    if (this == &src) return *this;
+
+    deleteSemantic();
+    copySemantic(src);
+    return *this;
+}
+
+Infest &Infest::operator=(Infest &&src) {
+    if (this == &src) return *this;
+
+    swap(src, false);
+    return *this;
+}
+
+Infest::~Infest() {
+    deleteSemantic();
+}
 
 void Infest::move(int p) {
     validatePopulation();
@@ -56,6 +75,7 @@ int Infest::extremeValue(Extreme e) {
 
     for (int i = 0; i < severity; i++) {
         GridFlea flea = getGridFlea(i);
+        if (!flea.isActive()) continue;
 
         if (first) {
             currExtreme = flea.value();
@@ -85,7 +105,7 @@ void Infest::reproduce() {
 }
 
 void Infest::validatePopulation() {
-    const int THRESHOLD = round(severity / 2);
+    const int THRESHOLD = (int) round(severity / 2);
     unsigned int deadCount = 0;
 
     for (int i = 0; i < severity; i++) {
@@ -108,17 +128,11 @@ void Infest::validatePopulation() {
 
 
 GridFlea *Infest::birthGridFlea(int nonce) const {
-    // Arbitrary formulas for creating GridFleas with a wide distribution of initial values.
-    // https://www.desmos.com/calculator/fnzcs8g0jt
-    nonce += 2;
-    int val = (((int) severity + 11) % (nonce * 97)) * (nonce % 7) + nonce;
-    int negative = (int) (pow(-1, nonce) * pow(-1, val));
-
-    int x = ((val * 3) % (int) (nonce * negative * cos(nonce)));
-    int y = ((val * 3) % (int) (nonce * negative * sin(nonce)));
-    unsigned int size = (val * 7 + severity) % x;
-    int reward = (int) (((val * 37 + x) % (int) (pow(nonce, 1.5) / severity + nonce)) * sin(x));
-    int energy = (int) (((val * 3 + y) % (int) sqrt(nonce * 97)) * pow(negative, 1.99 * nonce));
+    int x = nonce * 2;
+    int y = nonce * 3;
+    unsigned int size = nonce * 4;
+    int reward = nonce * 6;
+    int energy = nonce * 4;
 
     return new GridFlea(x, y, size, reward, energy);
 }
@@ -126,3 +140,38 @@ GridFlea *Infest::birthGridFlea(int nonce) const {
 GridFlea Infest::getGridFlea(int index) const {
     return *fleas[index];
 }
+
+void Infest::copySemantic(const Infest &src) {
+    severity = src.severity;
+    fleas = new GridFlea *[severity];
+
+    for (int i = 0; i < severity; i++) {
+        fleas[i] = new GridFlea(*src.fleas[i]);
+    }
+}
+
+void Infest::swap(Infest &src, bool zeroOut) {
+    unsigned int tempSeverity = src.severity;
+    GridFlea **tempFleas = src.fleas;
+
+    if (zeroOut) {
+        src.severity = 0;
+        src.fleas = nullptr;
+    } else {
+        src.severity = severity;
+        src.fleas = fleas;
+    }
+
+    severity = tempSeverity;
+    fleas = tempFleas;
+}
+
+void Infest::deleteSemantic() {
+    for (int i = 0; i < severity; i++) {
+        delete fleas[i];
+    }
+    delete[] fleas;
+}
+
+
+// ownership transfer
