@@ -51,10 +51,10 @@ void Infest::move(int p) {
     validatePopulation();
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = getGridFlea(i);
+        GridFlea *flea = getGridFlea(i);
 
-        if (flea.isActive()) {
-            flea.move(p);
+        if ((*flea).isActive()) {
+            (*flea).move(p);
         }
     }
 }
@@ -74,16 +74,16 @@ int Infest::extremeValue(Extreme e) {
     bool first = true;
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = getGridFlea(i);
-        if (!flea.isActive()) continue;
+        GridFlea *flea = getGridFlea(i);
+        if (!(*flea).isActive()) continue;
 
         if (first) {
-            currExtreme = flea.value();
+            currExtreme = (*flea).value();
             first = false;
         } else if (MIN == e) {
-            currExtreme = std::min(currExtreme, flea.value());
+            currExtreme = min(currExtreme, (*flea).value());
         } else if (MAX == e) {
-            currExtreme = std::max(currExtreme, flea.value());
+            currExtreme = max(currExtreme, (*flea).value());
         }
     }
 
@@ -92,11 +92,11 @@ int Infest::extremeValue(Extreme e) {
 
 void Infest::reproduce() {
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = getGridFlea(i);
+        GridFlea *flea = getGridFlea(i);
 
-        if (flea.isInactive()) {
-            flea.revive(REVIVE_ENERGY);
-        } else if (flea.isDead()) {
+        if ((*flea).isInactive()) {
+            (*flea).revive(REVIVE_ENERGY);
+        } else if ((*flea).isDead()) {
             // Replace the GridFlea with a new one
             delete fleas[i];
             fleas[i] = birthGridFlea(i);
@@ -109,9 +109,9 @@ void Infest::validatePopulation() {
     unsigned int deadCount = 0;
 
     for (int i = 0; i < severity; i++) {
-        GridFlea flea = getGridFlea(i);
+        GridFlea *flea = getGridFlea(i);
 
-        if (flea.isDead()) {
+        if ((*flea).isDead()) {
             deadCount++;
         }
 
@@ -127,18 +127,26 @@ void Infest::validatePopulation() {
 }
 
 
+const int X_MULTIPLIER = 2;
+const int Y_MULTIPLIER = 3;
+const int SIZE_MULTIPLIER = 2;
+const int REWARD_MULTIPLIER = 15;
+const int ENERGY_MULTIPLIER = 2;
+const int NONCE_LIMIT = 25;
+
 GridFlea *Infest::birthGridFlea(int nonce) const {
-    int x = nonce * 2;
-    int y = nonce * 3;
-    unsigned int size = nonce * 4;
-    int reward = nonce * 6;
-    int energy = nonce * 4;
+    nonce = (nonce % NONCE_LIMIT) + 1;
+    int x = nonce * X_MULTIPLIER;
+    int y = nonce * Y_MULTIPLIER;
+    unsigned int size = nonce * SIZE_MULTIPLIER;
+    int reward = nonce * REWARD_MULTIPLIER;
+    int energy = nonce * ENERGY_MULTIPLIER;
 
     return new GridFlea(x, y, size, reward, energy);
 }
 
-GridFlea Infest::getGridFlea(int index) const {
-    return *fleas[index];
+GridFlea *Infest::getGridFlea(int index) const {
+    return fleas[index];
 }
 
 void Infest::copySemantic(const Infest &src) {

@@ -48,7 +48,7 @@ private:
 
     GridFlea *birthGridFlea(int index) const;
 
-    GridFlea getGridFlea(int index) const;
+    GridFlea *getGridFlea(int index) const;
 
     void copySemantic(const Infest &src);
 
