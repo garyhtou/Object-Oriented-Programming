@@ -2,12 +2,25 @@
 // April 6th, 2022
 // CPSC 3200, P2
 
+// =============================================================================
+// ----------------------------- CLASS INVARIANTS ------------------------------
+// =============================================================================
+// This Infest class represents an infestation (collection) of GridFleas. It
+// allows the entire infestation to `move()` in unison and for the min and max
+// values of the infestation to be calculated. Infestations will never die out.
+//
+// Error Handling for GridFlea is done through throwing Exceptions.
+
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
 #include "Infest.h"
 #include "GridFlea.h"
 
+/*
+ * Preconditions: `severity` must be greater than zero
+ * Postconditions: none
+ */
 Infest::Infest(unsigned int severity) {
     if (severity <= 0) {
         throw invalid_argument("Severity can not be less than or equal to one");
@@ -20,14 +33,26 @@ Infest::Infest(unsigned int severity) {
     }
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest::Infest(const Infest &src) {
     copy(src);
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest::Infest(Infest &&src) {
     moveAndZeroOut(src);
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest &Infest::operator=(const Infest &src) {
     if (this == &src) return *this;
 
@@ -36,6 +61,10 @@ Infest &Infest::operator=(const Infest &src) {
     return *this;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest &Infest::operator=(Infest &&src) {
     if (this == &src) return *this;
 
@@ -43,10 +72,18 @@ Infest &Infest::operator=(Infest &&src) {
     return *this;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest::~Infest() {
     destroy();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 void Infest::move(int p) {
     validatePopulation();
 
@@ -59,11 +96,19 @@ void Infest::move(int p) {
     }
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 int Infest::minValue() {
     validatePopulation();
     return extremeValue(MIN);
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 int Infest::maxValue() {
     validatePopulation();
     return extremeValue(MAX);
@@ -185,4 +230,79 @@ void Infest::destroy() {
     delete[] fleas;
 }
 
-// ownership transfer
+// =============================================================================
+// ------------------------- IMPLEMENTATION INVARIANTS -------------------------
+// =============================================================================
+// This Infest class does not have any explicit state variable, however, it
+// encapsulates an array of pointers to GridFleas pointers. The cardinality of
+// this array is determined by the `severity` of the Infest. This `severity`
+// variable is set through the constructor.
+// To aid in the creation of new GridFlea (with a wide distribution of initial
+// values), the Infest class features a `birthGridFlea` method. More about this
+// below.
+//
+// The Infest class supports C++'s standard copy and move semantics. Since this
+// class contains heap data, the copy constructor, copy assignment operator,
+// move constructor, and move assignment operator are all explicitly defined.
+// They use helper methods such as `copy`, `swap`, `moveAndZeroOut`, and
+// `destroy` to perform the copy and move operations as well as encourage
+// functional decomposition and code reuse. For more information regarding copy
+// and move semantics, please refer to the C++ documentation. This class's
+// implementation of copy and move semantics are inline with the C++ standards.
+// Side note: The `destroy()` method is also called by the destructor.
+//
+// >>>> `Infest()` (Constructor) <<<<
+// The constructor of the Infest class takes in a single parameter, `severity`.
+// This `severity` parameter is used to determine the cardinality of the array
+// of GridFleas. The cardinality will never change in the lifetime of the
+// GridFlea (it is rigid).
+//
+// >>>> `move()` <<<<<
+// Before moving any GridFleas, a validation of the population is performed to
+// ensure that at least half of the GridFleas are active. See the
+// `validatePopulation()` section below for more information.
+// The `move()` method takes in a single parameter, `p`, which is passed in as
+// an argument to the `move()` method of every GridFlea in the Infest that is
+// Active. Non-Active GridFleas are ignored.
+//
+// >>>> `minValue()` <<<<
+// Before calculating the minimum value of the Infest, a validation of the
+// population is performed to ensure that at least half of the GridFleas are
+// active. See the `validatePopulation()` section below for more information.
+// The `minValue()` method uses the `extremeValue()` method to determine the
+// minimum value of all the Active GridFleas in the Infest.
+//
+// >>>> `maxValue()` <<<<
+// Before calculating the maximum value of the Infest, a validation of the
+// population is performed to ensure that at least half of the GridFleas are
+// active. See the `validatePopulation()` section below for more information.
+// The `maxValue()` method uses the `extremeValue()` method to determine the
+// maximum value of all the Active GridFleas in the Infest.
+//
+// >>>> `extremeValue()` <<<<
+// The `extremeValue()` method takes in a single parameter, `e`, which must be
+// a value from the `Extreme` enum (MIN or MAX). `e` is used to determine
+// whether the minimum or maximum value of the Infest is to be calculated.
+// The `extremeValue()` method loops through all Active GridFleas and retrieves
+// its `value()`. Then, keeps track of the min/max value of all the GridFleas.
+// That min/max value is then returned.
+//
+// >>>> `validatePopulation()` <<<<
+// The `validatePopulation()` method loops through all GridFleas in the Infest
+// and determines whether more than half of the GridFleas are in a non-Active
+// state (Inactive or Dead). If this is the case, the method will call
+// `reproduce()`. Please see the `reproduce()` section below for more details.
+//
+// >>>> `reproduce()` <<<<
+// The `reproduce()` method loops through all GridFleas in the Infest and
+// will `revive()` any Inactive GridFleas, and replace any Dead GridFleas.
+// Replacement of GridFleas is done by first deleting the existing GridFlea
+// (since they are located on the heap), and then creating a new one using the
+// `birthGridFlea()` method.
+//
+// >>>> `birthGridFlea()` <<<<
+// The `birthGridFlea()` method takes in a single parameter, `nonce`, which is
+// is used to deterministically generate a new GridFlea with a wide distribution
+// of initial value. These initial values are calculated by simply multiplying
+// the `nonce` by a constant. This method will return the pointer to a GridFlea
+// on the heap.

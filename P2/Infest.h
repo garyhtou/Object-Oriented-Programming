@@ -2,6 +2,33 @@
 // April 6th, 2022
 // CPSC 3200, P2
 
+// =============================================================================
+// ----------------------------- CLASS INVARIANTS ------------------------------
+// =============================================================================
+// This Infest class represents an infestation (collection) of GridFleas. It
+// allows the entire infestation to `move()` in unison and for the min and max
+// values of the infestation to be calculated. Infestations will never die out.
+//
+// Error Handling for GridFlea is done through throwing Exceptions.
+
+// =============================================================================
+// --------------------------- INTERFACE INVARIANTS ----------------------------
+// =============================================================================
+// `Infest()` (constructor):
+//   - Creates a new Infest using the given arguments.
+//   - Supports creation using default arguments
+//   - Allows the client to defined the `severity` of the infestation. This
+//     represents the number of fleas within this infestation.
+// `move()`:
+//   - Moves all fleas in the infestation in unison. Some fleas may move more
+//     than others due to their own individual states.
+//   - The amount to move is determined by the method argument `p` and is
+//     applied to every flea in the infestation.
+// `minValue()`:
+//   - Calculates the minimum value of the entire infestation.
+// `maxValue()`:
+//   - Calculates the maximum value of the entire infestation.
+
 #ifndef INFEST_H
 #define INFEST_H
 
