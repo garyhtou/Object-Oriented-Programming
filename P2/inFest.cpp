@@ -90,8 +90,8 @@ void Infest::move(int p) {
     for (int i = 0; i < severity; i++) {
         GridFlea *flea = getGridFlea(i);
 
-        if ((*flea).isActive()) {
-            (*flea).move(p);
+        if (flea->isActive()) {
+            flea->move(p);
         }
     }
 }
@@ -120,15 +120,15 @@ int Infest::extremeValue(Extreme e) {
 
     for (int i = 0; i < severity; i++) {
         GridFlea *flea = getGridFlea(i);
-        if (!(*flea).isActive()) continue;
+        if (!flea->isActive()) continue;
 
         if (first) {
-            currExtreme = (*flea).value();
+            currExtreme = flea->value();
             first = false;
         } else if (MIN == e) {
-            currExtreme = min(currExtreme, (*flea).value());
+            currExtreme = min(currExtreme, flea->value());
         } else if (MAX == e) {
-            currExtreme = max(currExtreme, (*flea).value());
+            currExtreme = max(currExtreme, flea->value());
         }
     }
 
@@ -139,9 +139,9 @@ void Infest::reproduce() {
     for (int i = 0; i < severity; i++) {
         GridFlea *flea = getGridFlea(i);
 
-        if ((*flea).isInactive()) {
-            (*flea).revive(REVIVE_ENERGY);
-        } else if ((*flea).isDead()) {
+        if (flea->isInactive()) {
+            flea->revive(REVIVE_ENERGY);
+        } else if (flea->isDead()) {
             // Replace the GridFlea with a new one
             delete fleas[i];
             fleas[i] = birthGridFlea(i);
@@ -156,7 +156,7 @@ void Infest::validatePopulation() {
     for (int i = 0; i < severity; i++) {
         GridFlea *flea = getGridFlea(i);
 
-        if ((*flea).isDead()) {
+        if (flea->isDead()) {
             deadCount++;
         }
 
