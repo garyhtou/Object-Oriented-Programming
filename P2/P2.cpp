@@ -28,7 +28,7 @@ void deleteInfests(Infest **infests) {
 
 void move(Infest &infest, unsigned int times, string type = "") {
     for (int i = 0; i < times; i++) {
-        int amount = rand() % MOVE_LIMIT + 1;
+        int amount = rand() % MOVE_LIMIT - (MOVE_LIMIT / 2);
         infest.move(amount);
     }
     cout << PRINT_PREFIX << "Moved ";
@@ -40,7 +40,7 @@ void move(Infest &infest, unsigned int times, string type = "") {
 
 void moveBoth(Infest &infest1, Infest &infest2, unsigned int times) {
     for (int i = 0; i < times; i++) {
-        int amount = rand() % (int) (MOVE_LIMIT / 2) + 1;
+        int amount = rand() % (int) (MOVE_LIMIT / 2) - (int) (MOVE_LIMIT / 4);
         infest1.move(amount);
         infest2.move(amount);
     }
@@ -48,7 +48,8 @@ void moveBoth(Infest &infest1, Infest &infest2, unsigned int times) {
 }
 
 void printVals(Infest &infest, string prefix) {
-    cout << prefix << "Value. Min: " << infest.minValue() << "\t Max: " << infest.maxValue() << endl;
+    cout << prefix << "Value. Min: " << infest.minValue() << "\t Max: "
+         << infest.maxValue() << endl;
 }
 
 const int MOVE1_TIMES = 5;
@@ -67,7 +68,8 @@ void run(Infest &infest, int id) {
 
     Infest clonedInfest = infest;
     cout << PRINT_PREFIX << endl;
-    cout << PRINT_PREFIX << "Created a copy of Infest #" << id << " (Cloned Infest)" << endl;
+    cout << PRINT_PREFIX << "Created a copy of Infest #" << id
+         << " (Cloned Infest)" << endl;
     printVals(infest, ORIGINAL_PREFIX);
     printVals(clonedInfest, CLONED_PREFIX);
 
