@@ -124,7 +124,7 @@ int GridFlea::value() {
  * Postconditions: none
  */
 GridFlea::State GridFlea::getState() {
-    if (isDead()) return state;
+    if (state == Dead) return state;
 
     if (isOutOfGridBounds()) {
         state = Dead;
@@ -246,7 +246,9 @@ void GridFlea::switchDirection() {
 // There are two bounds within a GridFlea: The grid bounds and the active
 // bounds. The grid bounds are fixed for all GridFleas, however, the active
 // bounds (which determines whether a GridFlea is Active or Inactive) can be set
-// via the constructor.
+// via the constructor. An active bound greater than the grid bound would
+// indicate that the GridFlea can not come Inactive and will only transition
+// directly to a Dead state.
 // A GridFlea is considered to be out of bounds when the absolute value of the
 // current position extends the relevant bound (either grid bound or active =
 // bound).

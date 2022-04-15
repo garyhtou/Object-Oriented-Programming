@@ -174,6 +174,7 @@ void Infest::validatePopulation() {
 
 const int X_MULTIPLIER = 2;
 const int Y_MULTIPLIER = 3;
+const int ACTIVE_BOUND_MULTIPLIER = 150;
 const int SIZE_MULTIPLIER = 2;
 const int REWARD_MULTIPLIER = 15;
 const int ENERGY_MULTIPLIER = 2;
@@ -183,11 +184,12 @@ GridFlea *Infest::birthGridFlea(int nonce) const {
     nonce = (nonce % NONCE_LIMIT) + 1;
     int x = nonce * X_MULTIPLIER;
     int y = nonce * Y_MULTIPLIER;
+    unsigned int activeBound = nonce * ACTIVE_BOUND_MULTIPLIER;
     unsigned int size = nonce * SIZE_MULTIPLIER;
     int reward = nonce * REWARD_MULTIPLIER;
     int energy = nonce * ENERGY_MULTIPLIER;
 
-    return new GridFlea(x, y, size, reward, energy);
+    return new GridFlea(x, y, activeBound, size, reward, energy);
 }
 
 GridFlea *Infest::getGridFlea(int index) const {
