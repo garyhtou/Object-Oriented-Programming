@@ -1,10 +1,8 @@
 CXX := g++ 
 CXXFLAGS := -g -O0 -std=c++17
 
-SRC	:= GridFlea.cpp Infest.cpp P2.cpp
-HDR	:= GridFlea.h Infest.h
-# SRC	:= GridFlea.cpp Infest.cpp P1.cpp
-# HDR	:= GridFlea.h Infest.h
+SRC	:= gridFlea.cpp inFest.cpp P2.cpp
+HDR	:= gridFlea.h inFest.h
 OBJ	:= $(patsubst %.cpp, %.o, $(SRC))
 
 all: P2

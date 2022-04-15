@@ -24,7 +24,7 @@
 
 #include <stdexcept>
 #include <cmath>
-#include "GridFlea.h"
+#include "gridFlea.h"
 
 /*
  * Preconditions: none

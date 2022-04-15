@@ -34,7 +34,7 @@
 
 using namespace std;
 
-#include "GridFlea.h"
+#include "gridFlea.h"
 
 class Infest {
 public:

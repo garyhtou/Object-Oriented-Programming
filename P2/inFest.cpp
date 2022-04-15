@@ -14,8 +14,8 @@
 #include <stdexcept>
 #include <cmath>
 #include <algorithm>
-#include "Infest.h"
-#include "GridFlea.h"
+#include "inFest.h"
+#include "gridFlea.h"
 
 /*
  * Preconditions: `severity` must be greater than zero
