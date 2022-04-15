@@ -21,30 +21,30 @@ Infest::Infest(unsigned int severity) {
 }
 
 Infest::Infest(const Infest &src) {
-    copySemantic(src);
+    copy(src);
 }
 
 Infest::Infest(Infest &&src) {
-    swap(src, true);
+    moveAndZeroOut(src);
 }
 
 Infest &Infest::operator=(const Infest &src) {
     if (this == &src) return *this;
 
-    deleteSemantic();
-    copySemantic(src);
+    destroy();
+    copy(src);
     return *this;
 }
 
 Infest &Infest::operator=(Infest &&src) {
     if (this == &src) return *this;
 
-    swap(src, false);
+    swap(src);
     return *this;
 }
 
 Infest::~Infest() {
-    deleteSemantic();
+    destroy();
 }
 
 void Infest::move(int p) {
@@ -149,7 +149,7 @@ GridFlea *Infest::getGridFlea(int index) const {
     return fleas[index];
 }
 
-void Infest::copySemantic(const Infest &src) {
+void Infest::copy(const Infest &src) {
     severity = src.severity;
     fleas = new GridFlea *[severity];
 
@@ -174,12 +174,15 @@ void Infest::swap(Infest &src, bool zeroOut) {
     fleas = tempFleas;
 }
 
-void Infest::deleteSemantic() {
+void Infest::moveAndZeroOut(Infest &src) {
+    swap(src, true);
+}
+
+void Infest::destroy() {
     for (int i = 0; i < severity; i++) {
         delete fleas[i];
     }
     delete[] fleas;
 }
-
 
 // ownership transfer

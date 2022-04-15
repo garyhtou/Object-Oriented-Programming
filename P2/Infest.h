@@ -50,11 +50,13 @@ private:
 
     GridFlea *getGridFlea(int index) const;
 
-    void copySemantic(const Infest &src);
+    void copy(const Infest &src);
 
-    void swap(Infest &src, bool zeroOut);
+    void swap(Infest &src, bool zeroOut = false);
 
-    void deleteSemantic();
+    void moveAndZeroOut(Infest &src);
+
+    void destroy();
 };
 
 #endif
