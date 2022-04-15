@@ -38,22 +38,58 @@ using namespace std;
 
 class Infest {
 public:
+    /*
+     * Preconditions: `severity` must be greater than zero
+     * Postconditions: none
+     */
     Infest(unsigned int severity);
 
-    ~Infest();
-
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest(const Infest &src);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest(Infest &&src);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest &operator=(const Infest &src);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest &operator=(Infest &&src);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
+    ~Infest();
+
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     void move(int p);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     int minValue();
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     int maxValue();
 
 private:
