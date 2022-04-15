@@ -5,8 +5,9 @@ using namespace std;
 
 const int NUM_INFESTS = 10;
 const string PRINT_PREFIX = "|  > ";
-const string CLONED_PREFIX = PRINT_PREFIX + "  Cloned Infest:    ";
-const string ORIGINAL_PREFIX = PRINT_PREFIX + "  Original Infest:  ";
+const string CLONED_PREFIX = PRINT_PREFIX + "  Cloned Infest:         ";
+const string ORIGINAL_PREFIX = PRINT_PREFIX + "  Original Infest:       ";
+const string CBV_PREFIX = PRINT_PREFIX + "  Copy by value Infest:  ";
 const int MOVE_LIMIT = 20;
 const int SEVERITY_LIMIT = 100;
 
@@ -52,6 +53,10 @@ void printVals(Infest &infest, string prefix) {
          << infest.maxValue() << endl;
 }
 
+void printValsCopyByValue(Infest infest, string prefix) {
+    printVals(infest, prefix);
+}
+
 const int MOVE1_TIMES = 5;
 const int MOVE2_TIMES = 3;
 const int MOVE3_TIMES = 5;
@@ -82,6 +87,8 @@ void run(Infest &infest, int id) {
 
     move(clonedInfest, MOVE4_TIMES, "Cloned");
     printVals(clonedInfest, ORIGINAL_PREFIX);
+
+    printValsCopyByValue(clonedInfest, CBV_PREFIX);
 
     cout << "=== Finished Running Infest #" << id << " ===\n\n" << endl;
 }
