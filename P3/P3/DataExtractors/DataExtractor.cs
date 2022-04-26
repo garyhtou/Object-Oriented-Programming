@@ -3,6 +3,7 @@
     public enum State
     {
         Active,
+        Invalid,
         Deactivated
     }
 
@@ -12,49 +13,44 @@
         {
             if (x.Length == 0)
             {
-                throw new InvalidDataException("x can't be an empty array");
+                markDeactivated();
             }
 
-            xMinLength = (int)Math.Ceiling(x.Length / 2.0);
-            yMinLength = x.First() % 10 + 1;
+            xMinLength = xBaselineLength + (x.Length / 4);
+            yMinLength = yBaselineLength + (x.Length / 2);
 
             foreach (int currX in x)
             {
                 AddX(currX);
+                AddY(currX * 2);
             }
 
-            for (int i = 0; i < yMinLength; i++)
-            {
-                int xMappedIndex = i % x.Length;
-                AddY(_xVals[xMappedIndex] * 2);
-            }
+            validateLengths();
         }
 
         public virtual int[] any()
         {
+            beforeRequest();
+
             bool toggle = true;
-            int maxLen = Math.Max(_xVals.Length, _yVals.Length);
-            int minLen = Math.Min(_xVals.Length, _yVals.Length);
+            int minLen = Math.Min(xVals.Length, yVals.Length);
 
             int[] composite = Array.Empty<int>();
 
             // Alternate adding elements from both array
             for (int i = 0; i < minLen; i++)
             {
+                int valsIndex = (i + anyOffset);
                 if (toggle)
                 {
-                    composite[i] = _xVals[(i + anyOffset) % _xVals.Length];
+                    composite[i] = xVals[valsIndex % xVals.Length];
                 }
                 else
                 {
-                    composite[i] = _yVals[i];
+                    composite[i] = yVals[valsIndex % yVals.Length];
                 }
-            }
 
-            // Fill the remaining elements from the longer array
-            for (int i = minLen; i < maxLen; i++)
-            {
-                composite[i] = _xVals.Length == maxLen ? _xVals[i] : _yVals[i];
+                toggle = !toggle;
             }
 
             anyOffset++;
@@ -63,15 +59,45 @@
 
         public virtual int[] target(uint z)
         {
+            beforeRequest();
+
+            bool even = totalRequests % 2 == 0;
+            int[] output = Array.Empty<int>();
+
+            foreach (int x in xVals)
+            {
+                if (x % 2 == (even ? 0 : 1))
+                {
+                    output[x] = x;
+                }
+            }
+
+            return output;
         }
 
         public int sum(uint z)
         {
+            beforeRequest();
+
+            bool even = totalRequests % 2 == 0;
+            int output = 0;
+
+            foreach (int y in yVals)
+            {
+                if (y % 2 == (even ? 0 : 1))
+                {
+                    output += y;
+                }
+            }
+
+            return output;
         }
 
 
-        private int[] _xVals;
-        private int[] _yVals = Array.Empty<int>();
+        private int[] xVals;
+        private int[] yVals = Array.Empty<int>();
+        private static int xBaselineLength = 10;
+        private static int yBaselineLength = 10;
         private int xMinLength;
         private int yMinLength;
 
@@ -83,34 +109,57 @@
 
         protected virtual int[] GetXs()
         {
-            return _xVals;
+            return xVals;
         }
 
         protected virtual int[] GetYs()
         {
-            return _yVals;
+            return yVals;
         }
 
-        protected bool AddX(int x)
+        protected void AddX(int x)
         {
-            if (_xVals.Contains(x)) return false;
+            if (xVals.Contains(x))
+            {
+                markDeactivated();
+            }
 
-            _xVals = _xVals.Append(x).ToArray();
-            return true;
+            xVals = xVals.Append(x).ToArray();
         }
 
-        protected bool AddY(int y)
+        protected void AddY(int y)
         {
-            if (_yVals.Contains(y)) return false;
+            if (yVals.Contains(y))
+            {
+                markDeactivated();
+            }
 
-            _yVals = _yVals.Append(y).ToArray();
-            return true;
+            yVals = yVals.Append(y).ToArray();
         }
 
         protected virtual void beforeRequest()
         {
             totalRequests++;
+        }
 
+        private void validateLengths()
+        {
+            if (xVals.Length < xMinLength || yVals.Length < yMinLength)
+            {
+                state = State.Invalid;
+            }
+        }
+
+        private void markInvalid()
+        {
+            failedRequests++;
+            state = State.Invalid;
+        }
+
+        private void markDeactivated()
+        {
+            failedRequests++;
+            state = State.Deactivated;
         }
     }
 }
