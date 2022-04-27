@@ -4,29 +4,41 @@ public class DataHalf : DataExtractor
 {
     public DataHalf(int[] x) : base(x)
     {
-        FailureLimit = x.Last();
+        FailureLimit = xVals.Last();
+
+        for (int i = 0; i < xVals.Length; i++)
+        {
+            xVals[i] /= 2;
+        }
     }
 
-    protected override int[] GetXs()
+    public override int[] Any()
     {
-        int[] halved = base.GetXs();
-        for (int i = 0; i < halved.Length; i++)
+        if (ShouldNewAny())
         {
-            halved[i] /= 2;
+            previousAny = base.Any();
         }
 
-        return halved;
+        anyRequests++;
+        return previousAny;
     }
 
-
-    protected readonly int FailureLimit;
-
-    protected override void beforeRequest()
+    protected override void BeforeRequest()
     {
-        base.beforeRequest();
+        base.BeforeRequest();
+
         if (failedRequests >= FailureLimit)
         {
-            throw new InvalidOperationException("Too many failed requests");
+            MarkDeactivated();
         }
+    }
+
+    private readonly int FailureLimit;
+    private int anyRequests = 0;
+    private int[] previousAny;
+
+    private bool ShouldNewAny()
+    {
+        return (new int[] { 0, 1 }).Contains(anyRequests % 4);
     }
 }

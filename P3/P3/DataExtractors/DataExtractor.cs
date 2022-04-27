@@ -3,7 +3,6 @@
     public enum State
     {
         Active,
-        Invalid,
         Deactivated
     }
 
@@ -13,7 +12,8 @@
         {
             if (x.Length == 0)
             {
-                markDeactivated();
+                state = State.Deactivated;
+                throw new Exception("x array must not be empty");
             }
 
             xMinLength = xBaselineLength + (x.Length / 4);
@@ -21,16 +21,21 @@
 
             foreach (int currX in x)
             {
-                AddX(currX);
-                AddY(currX * 2);
+                if (!AddX(currX) || !AddY(currX * 2))
+                {
+                    state = State.Deactivated;
+                }
             }
 
-            validateLengths();
+            if (HasInvalidLengths())
+            {
+                state = State.Deactivated;
+            }
         }
 
-        public virtual int[] any()
+        public virtual int[] Any()
         {
-            beforeRequest();
+            BeforeRequest();
 
             bool toggle = true;
             int minLen = Math.Min(xVals.Length, yVals.Length);
@@ -57,9 +62,9 @@
             return composite;
         }
 
-        public virtual int[] target(uint z)
+        public virtual int[] Target(uint z)
         {
-            beforeRequest();
+            BeforeRequest();
 
             bool even = totalRequests % 2 == 0;
             int[] output = Array.Empty<int>();
@@ -75,9 +80,9 @@
             return output;
         }
 
-        public int sum(uint z)
+        public int Sum(uint z)
         {
-            beforeRequest();
+            BeforeRequest();
 
             bool even = totalRequests % 2 == 0;
             int output = 0;
@@ -94,72 +99,76 @@
         }
 
 
-        private int[] xVals;
-        private int[] yVals = Array.Empty<int>();
+        protected int[] xVals;
+        protected int[] yVals = Array.Empty<int>();
+
         private static int xBaselineLength = 10;
         private static int yBaselineLength = 10;
         private int xMinLength;
         private int yMinLength;
 
         protected State state = State.Active;
-        private int anyOffset = 0;
-
         protected int totalRequests = 0;
         protected int failedRequests = 0;
 
-        protected virtual int[] GetXs()
+        private int anyOffset = 0;
+
+        protected bool isActive()
         {
-            return xVals;
+            return state == State.Active;
         }
 
-        protected virtual int[] GetYs()
+        protected bool IsDeactivated()
         {
-            return yVals;
+            return state == State.Deactivated;
         }
 
-        protected void AddX(int x)
-        {
-            if (xVals.Contains(x))
-            {
-                markDeactivated();
-            }
-
-            xVals = xVals.Append(x).ToArray();
-        }
-
-        protected void AddY(int y)
-        {
-            if (yVals.Contains(y))
-            {
-                markDeactivated();
-            }
-
-            yVals = yVals.Append(y).ToArray();
-        }
-
-        protected virtual void beforeRequest()
-        {
-            totalRequests++;
-        }
-
-        private void validateLengths()
-        {
-            if (xVals.Length < xMinLength || yVals.Length < yMinLength)
-            {
-                state = State.Invalid;
-            }
-        }
-
-        private void markInvalid()
-        {
-            failedRequests++;
-            state = State.Invalid;
-        }
-
-        private void markDeactivated()
+        protected void MarkDeactivated()
         {
             failedRequests++;
             state = State.Deactivated;
+            throw new Exception("Invalid request");
+        }
+
+        protected bool AddX(int x, bool throwException = false)
+        {
+            if (xVals.Contains(x))
+            {
+                if (throwException) throw new Exception($"{x} already exists in 'x' array");
+
+                return false;
+            }
+
+            xVals = xVals.Append(x).ToArray();
+            return true;
+        }
+
+        protected bool AddY(int y, bool throwException = false)
+        {
+            if (yVals.Contains(y))
+            {
+                if (throwException) throw new Exception($"{y} already exists in 'y' array");
+
+                return false;
+            }
+
+            yVals = yVals.Append(y).ToArray(); // TODO: is it okay to use this?
+            return true;
+        }
+
+        protected virtual void BeforeRequest()
+        {
+            totalRequests++;
+            if (IsDeactivated())
+            {
+                failedRequests++;
+                throw new Exception("Invalid request");
+            }
+        }
+
+        private bool HasInvalidLengths()
+        {
+            return xVals.Length < xMinLength || yVals.Length < yMinLength;
         }
     }
 }
