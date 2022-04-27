@@ -87,6 +87,8 @@
             bool even = totalRequests % 2 == 0;
             int output = 0;
 
+            // output = yVals.Aggregate((total, y) => y % 2 == (even ? 0 : 1) ? total + y : total);
+
             foreach (int y in yVals)
             {
                 if (y % 2 == (even ? 0 : 1))
