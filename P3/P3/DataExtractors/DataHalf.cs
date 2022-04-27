@@ -1,10 +1,10 @@
-using DataExtractors;
+namespace DataExtractors;
 
 public class DataHalf : DataExtractor
 {
     public DataHalf(int[] x) : base(x)
     {
-        FailureLimit = xVals.Last();
+        failureLimit = xVals.Last();
 
         for (int i = 0; i < xVals.Length; i++)
         {
@@ -27,18 +27,19 @@ public class DataHalf : DataExtractor
     {
         base.BeforeRequest();
 
-        if (failedRequests >= FailureLimit)
+        if (failedRequests >= failureLimit)
         {
             MarkDeactivated();
         }
     }
 
-    private readonly int FailureLimit;
+    private readonly int failureLimit;
     private int anyRequests = 0;
-    private int[] previousAny;
+    private int[]? previousAny;
 
     private bool ShouldNewAny()
     {
-        return (new int[] { 0, 1 }).Contains(anyRequests % 4);
+        int rem = anyRequests % 4;
+        return previousAny is null || rem is 0 or 1;
     }
 }

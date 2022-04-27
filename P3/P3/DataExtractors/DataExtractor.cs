@@ -73,7 +73,7 @@
             {
                 if (x % 2 == (even ? 0 : 1))
                 {
-                    output = output.Append(x).ToArray();
+                    output = AppendToArray(output, x);
                 }
             }
 
@@ -87,8 +87,6 @@
             bool even = totalRequests % 2 == 0;
             int output = 0;
 
-            // output = yVals.Aggregate((total, y) => y % 2 == (even ? 0 : 1) ? total + y : total);
-
             foreach (int y in yVals)
             {
                 if (y % 2 == (even ? 0 : 1))
@@ -101,15 +99,15 @@
         }
 
 
-        protected int[] xVals;
+        protected int[] xVals = Array.Empty<int>();
         protected int[] yVals = Array.Empty<int>();
 
         private const int X_BASELINE_LENGTH = 10;
         private const int Y_BASELINE_LENGTH = 10;
-        private int xMinLength;
-        private int yMinLength;
+        private readonly int xMinLength;
+        private readonly int yMinLength;
 
-        protected State state = State.Active;
+        private State state = State.Active;
         protected int totalRequests = 0;
         protected int failedRequests = 0;
 
@@ -141,7 +139,7 @@
                 return false;
             }
 
-            xVals = xVals.Append(x).ToArray();
+            xVals = AppendToArray(xVals, x);
             return true;
         }
 
@@ -154,13 +152,14 @@
                 return false;
             }
 
-            yVals = yVals.Append(y).ToArray(); // TODO: is it okay to use this?
+            yVals = AppendToArray(yVals, y);
             return true;
         }
 
         protected virtual void BeforeRequest()
         {
             totalRequests++;
+
             if (IsDeactivated())
             {
                 failedRequests++;
@@ -171,6 +170,18 @@
         private bool HasInvalidLengths()
         {
             return xVals.Length < xMinLength || yVals.Length < yMinLength;
+        }
+
+        protected static int[] AppendToArray(int[] arr, int val)
+        {
+            int[] newArr = new int[arr.Length + 1];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                newArr[i] = arr[i];
+            }
+
+            newArr[arr.Length] = val;
+            return newArr;
         }
     }
 }

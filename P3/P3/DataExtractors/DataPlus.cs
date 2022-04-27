@@ -1,12 +1,12 @@
-using DataExtractors;
+namespace DataExtractors;
 
 public class DataPlus : DataExtractor
 {
     public DataPlus(int[] x) : base(x)
     {
-        a = xVals.First();
         k = xVals.Last();
 
+        int a = xVals.First();
         AddY(a, throwException: true);
     }
 
@@ -18,7 +18,7 @@ public class DataPlus : DataExtractor
         {
             if (x % 2 == 1)
             {
-                output = output.Append(x).ToArray();
+                output = AppendToArray(output, x);
             }
         }
 
@@ -26,7 +26,7 @@ public class DataPlus : DataExtractor
         {
             if (y % 2 == 0)
             {
-                output = output.Append(y).ToArray();
+                output = AppendToArray(output, y);
             }
         }
 
@@ -48,7 +48,6 @@ public class DataPlus : DataExtractor
         }
     }
 
-    private readonly int a;
     private int j = 1;
     private readonly int k;
 }
