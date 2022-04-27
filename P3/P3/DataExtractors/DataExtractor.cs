@@ -16,8 +16,8 @@
                 throw new Exception("x array must not be empty");
             }
 
-            xMinLength = xBaselineLength + (x.Length / 4);
-            yMinLength = yBaselineLength + (x.Length / 2);
+            xMinLength = X_BASELINE_LENGTH + (x.Length / 4);
+            yMinLength = Y_BASELINE_LENGTH + (x.Length / 2);
 
             foreach (int currX in x)
             {
@@ -73,7 +73,7 @@
             {
                 if (x % 2 == (even ? 0 : 1))
                 {
-                    output[x] = x;
+                    output = output.Append(x).ToArray();
                 }
             }
 
@@ -102,8 +102,8 @@
         protected int[] xVals;
         protected int[] yVals = Array.Empty<int>();
 
-        private static int xBaselineLength = 10;
-        private static int yBaselineLength = 10;
+        private const int X_BASELINE_LENGTH = 10;
+        private const int Y_BASELINE_LENGTH = 10;
         private int xMinLength;
         private int yMinLength;
 
