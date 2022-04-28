@@ -23,7 +23,7 @@ public class DataHalf : DataExtractor
         return previousAny;
     }
 
-    protected override void BeforeRequest()
+    protected override void BeforeRequest(bool increment = true)
     {
         base.BeforeRequest();
 

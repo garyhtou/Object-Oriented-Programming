@@ -55,15 +55,17 @@
             for (int i = 0; i < minLen; i++)
             {
                 int valsIndex = (i + anyOffset);
+                int newVal;
                 if (toggle)
                 {
-                    composite[i] = xVals[valsIndex % xVals.Length];
+                    newVal = xVals[valsIndex % xVals.Length];
                 }
                 else
                 {
-                    composite[i] = yVals[valsIndex % yVals.Length];
+                    newVal = yVals[valsIndex % yVals.Length];
                 }
 
+                composite = AppendToArray(composite, newVal);
                 toggle = !toggle;
             }
 
@@ -96,12 +98,11 @@
 
         public int Sum(uint z)
         {
+            int[] target = Target();
             BeforeRequest();
 
-            int[] target = Target(z);
-
             int output = 0;
-            foreach (int val in target)
+            foreach (int val in Target(z))
             {
                 output += val;
             }
@@ -167,9 +168,9 @@
             return true;
         }
 
-        protected virtual void BeforeRequest()
+        protected virtual void BeforeRequest(bool increment = true)
         {
-            totalRequests++;
+            if (increment) totalRequests++;
 
             if (IsDeactivated())
             {

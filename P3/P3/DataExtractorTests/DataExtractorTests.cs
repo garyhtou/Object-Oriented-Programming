@@ -67,7 +67,7 @@ public class DataExtractorTests
         DataExtractor de = new(oneToFiveArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = de.Any();
 
-        Assert.AreEqual(results, Any_WithValid_ReturnsAlternatingArray_Expected);
+        CollectionAssert.AreEqual(Any_WithValid_ReturnsAlternatingArray_Expected, results);
     }
 
     [TestMethod]
@@ -79,11 +79,11 @@ public class DataExtractorTests
     }
 
     [TestMethod]
-    public void Any_withDeactivated_IsDeactivated()
+    [ExpectedException(typeof(Exception))]
+    public void Any_withDeactivated_ThrowsException()
     {
         DataExtractor de = DataExtractor_Deactivated_Factory();
         de.Any();
-        Assert.IsTrue(de.IsDeactivated());
     }
 
     private readonly int[] Target_WithValidAndEven_ReturnsEven_Expected = { 2, 4 };
@@ -94,7 +94,7 @@ public class DataExtractorTests
         DataExtractor de = new(oneToFiveArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = de.Target(10);
 
-        Assert.Equals(results, Target_WithValidAndEven_ReturnsEven_Expected);
+        Assert.AreEqual(Target_WithValidAndEven_ReturnsEven_Expected, results);
     }
 
     private readonly int[] Target_WithValidAndOdd_ReturnsOdd_Expected = { 1, 3, 5 };
@@ -105,7 +105,7 @@ public class DataExtractorTests
         DataExtractor de = new(oneToTenArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = de.Target(3);
 
-        Assert.Equals(results, Target_WithValidAndOdd_ReturnsOdd_Expected);
+        Assert.AreEqual(Target_WithValidAndOdd_ReturnsOdd_Expected, results);
     }
 
     [TestMethod]
@@ -117,11 +117,11 @@ public class DataExtractorTests
     }
 
     [TestMethod]
-    public void Target_withDeactivated_IsDeactivated()
+    [ExpectedException(typeof(Exception))]
+    public void Target_withDeactivated_ThrowsException()
     {
         DataExtractor de = DataExtractor_Deactivated_Factory();
         de.Target(10);
-        Assert.IsTrue(de.IsDeactivated());
     }
 
     private const int Sum_Even_IsSumOfTarget_Z = 10;
@@ -132,9 +132,11 @@ public class DataExtractorTests
         DataExtractor de = new DataExtractor(oneToTenArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
 
         int value = de.Sum(Sum_Even_IsSumOfTarget_Z);
-        int expectedValue = de.Target(Sum_Even_IsSumOfTarget_Z).Sum();
+        int expectedValue = oneToTenArray.Where(i => i % 2 == 0)
+            .Take(Sum_Even_IsSumOfTarget_Z)
+            .Sum();
 
-        Assert.Equals(value, expectedValue);
+        Assert.AreEqual(expectedValue, value);
     }
 
     private const int Sum_Odd_IsSumOfTarget_Z = 9;
@@ -145,9 +147,11 @@ public class DataExtractorTests
         DataExtractor de = new DataExtractor(oneToTenArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
 
         int value = de.Sum(Sum_Odd_IsSumOfTarget_Z);
-        int expectedValue = de.Target(Sum_Odd_IsSumOfTarget_Z).Sum();
+        int expectedValue = oneToTenArray.Where(i => i % 2 == 1)
+            .Take(Sum_Odd_IsSumOfTarget_Z)
+            .Sum();
 
-        Assert.Equals(value, expectedValue);
+        Assert.AreEqual(expectedValue, value);
     }
 
     [TestMethod]

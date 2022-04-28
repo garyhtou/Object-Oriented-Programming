@@ -33,7 +33,7 @@ public class DataPlus : DataExtractor
         return output;
     }
 
-    protected override void BeforeRequest()
+    protected override void BeforeRequest(bool increment = true)
     {
         base.BeforeRequest();
 
