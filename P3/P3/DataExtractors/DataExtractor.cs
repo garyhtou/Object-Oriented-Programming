@@ -8,16 +8,25 @@
 
     public class DataExtractor
     {
-        public DataExtractor(int[] x)
+        public DataExtractor(int[] x, uint xMinLength, uint yMinLength)
         {
             if (x.Length == 0)
             {
-                state = State.Deactivated;
                 throw new Exception("x array must not be empty");
             }
 
-            xMinLength = X_BASELINE_LENGTH + (x.Length / 4);
-            yMinLength = Y_BASELINE_LENGTH + (x.Length / 2);
+            if (xMinLength == 0)
+            {
+                throw new Exception("xMinLength must not be zero");
+            }
+
+            if (yMinLength == 0)
+            {
+                throw new Exception("yMinLength must not be zero");
+            }
+
+            this.xMinLength = (int)xMinLength;
+            this.yMinLength = (int)yMinLength;
 
             foreach (int currX in x)
             {
@@ -40,7 +49,7 @@
             bool toggle = true;
             int minLen = Math.Min(xVals.Length, yVals.Length);
 
-            int[] composite = Array.Empty<int>();
+            int[] composite = { };
 
             // Alternate adding elements from both array
             for (int i = 0; i < minLen; i++)
@@ -67,13 +76,18 @@
             BeforeRequest();
 
             bool even = totalRequests % 2 == 0;
-            int[] output = Array.Empty<int>();
+            int[] output = { };
 
-            foreach (int x in xVals)
+            for (int i = 0; i < xVals.Length; i++)
             {
-                if (x % 2 == (even ? 0 : 1))
+                if (output.Length == z)
                 {
-                    output = AppendToArray(output, x);
+                    break;
+                }
+
+                if (xVals[i] % 2 == (even ? 0 : 1))
+                {
+                    output = AppendToArray(output, xVals[i]);
                 }
             }
 
@@ -84,26 +98,21 @@
         {
             BeforeRequest();
 
-            bool even = totalRequests % 2 == 0;
-            int output = 0;
+            int[] target = Target(z);
 
-            foreach (int y in yVals)
+            int output = 0;
+            foreach (int val in target)
             {
-                if (y % 2 == (even ? 0 : 1))
-                {
-                    output += y;
-                }
+                output += val;
             }
 
             return output;
         }
 
 
-        protected int[] xVals = Array.Empty<int>();
-        protected int[] yVals = Array.Empty<int>();
+        protected int[] xVals = { };
+        protected int[] yVals = { };
 
-        private const int X_BASELINE_LENGTH = 10;
-        private const int Y_BASELINE_LENGTH = 10;
         private readonly int xMinLength;
         private readonly int yMinLength;
 
@@ -113,12 +122,12 @@
 
         private int anyOffset = 0;
 
-        protected bool isActive()
+        public bool IsActive()
         {
             return state == State.Active;
         }
 
-        protected bool IsDeactivated()
+        public bool IsDeactivated()
         {
             return state == State.Deactivated;
         }
@@ -132,9 +141,10 @@
 
         protected bool AddX(int x, bool throwException = false)
         {
-            if (xVals.Contains(x))
+            if (ArrayContains(xVals, x))
             {
-                if (throwException) throw new Exception($"{x} already exists in 'x' array");
+                if (throwException)
+                    throw new Exception($"{x} already exists in 'x' array");
 
                 return false;
             }
@@ -145,9 +155,10 @@
 
         protected bool AddY(int y, bool throwException = false)
         {
-            if (yVals.Contains(y))
+            if (ArrayContains(yVals, y))
             {
-                if (throwException) throw new Exception($"{y} already exists in 'y' array");
+                if (throwException)
+                    throw new Exception($"{y} already exists in 'y' array");
 
                 return false;
             }
@@ -182,6 +193,16 @@
 
             newArr[arr.Length] = val;
             return newArr;
+        }
+
+        private static bool ArrayContains(int[] arr, int val)
+        {
+            foreach (int i in arr)
+            {
+                if (i == val) return true;
+            }
+
+            return false;
         }
     }
 }

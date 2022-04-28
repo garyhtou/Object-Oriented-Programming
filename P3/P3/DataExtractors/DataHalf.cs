@@ -2,7 +2,7 @@ namespace DataExtractors;
 
 public class DataHalf : DataExtractor
 {
-    public DataHalf(int[] x) : base(x)
+    public DataHalf(int[] x, uint xMinLength, uint yMinLength) : base(x, xMinLength, yMinLength)
     {
         failureLimit = xVals.Last();
 

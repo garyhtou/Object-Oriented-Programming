@@ -2,7 +2,7 @@ namespace DataExtractors;
 
 public class DataPlus : DataExtractor
 {
-    public DataPlus(int[] x) : base(x)
+    public DataPlus(int[] x, uint xMinLength, uint yMinLength) : base(x, xMinLength, yMinLength)
     {
         k = xVals.Last();
 
@@ -12,7 +12,7 @@ public class DataPlus : DataExtractor
 
     public override int[] Target(uint z)
     {
-        int[] output = Array.Empty<int>();
+        int[] output = { };
 
         foreach (int x in xVals)
         {
