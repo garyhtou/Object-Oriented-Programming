@@ -86,26 +86,26 @@ public class DataPlusTests
         dp.Any();
     }
 
-    private readonly int[] Target_WithValidAndEven_ReturnsEven_Expected = { 1, 3, 5, 2, 4, 6, 8, 10 };
+    private readonly int[] Target_WithZ10_ReturnsOddXAndEvenY_Expected = { 1, 3, 5, 2, 4, 6, 8, 10 };
 
     [TestMethod]
-    public void Target_WithZ10_ReturnsOddXAndEventY()
+    public void Target_WithZ10_ReturnsOddXAndEvenY()
     {
         DataPlus dp = new(oneToFiveArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = dp.Target(10);
 
-        CollectionAssert.AreEqual(Target_WithValidAndEven_ReturnsEven_Expected, results);
+        CollectionAssert.AreEqual(Target_WithZ10_ReturnsOddXAndEvenY_Expected, results);
     }
 
-    private readonly int[] Target_WithValidAndOdd_ReturnsOdd_Expected = { 1, 2 };
+    private readonly int[] Target_WithZ1_ReturnsOddXAndEvenY_Expected = { 1, 2 };
 
     [TestMethod]
-    public void Target_WithZ1_ReturnsOddXAndEventY()
+    public void Target_WithZ1_ReturnsOddXAndEvenY()
     {
         DataPlus dp = new(oneToTenArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = dp.Target(1);
 
-        CollectionAssert.AreEqual(Target_WithValidAndOdd_ReturnsOdd_Expected, results);
+        CollectionAssert.AreEqual(Target_WithZ1_ReturnsOddXAndEvenY_Expected, results);
     }
 
     [TestMethod]
@@ -162,24 +162,24 @@ public class DataPlusTests
         Assert.IsTrue(dp.IsActive());
     }
 
-    // private readonly int[] AddToY_EveryNEqualJKRequests_X = new[] { 3, 5, 2 };
-    //
-    // [TestMethod]
-    // public void AddToY_EveryNEqualJKRequests()
-    // {
-    //     DataPlus dp = new(AddToY_EveryNEqualJKRequests_X, ONE_MIN_LENGTH, ONE_MIN_LENGTH);
-    //
-    //     int[] initialTarget = dp.Target(10);
-    //     for (int i = 0; i < AddToY_EveryNEqualJKRequests_X.Last() + 200; i++)
-    //     {
-    //         dp.Any();
-    //     }
-    //
-    //     int[] finalTarget = dp.Target(10);
-    //     Console.WriteLine(String.Join(",", initialTarget));
-    //     Console.WriteLine(String.Join(",", finalTarget));
-    //     CollectionAssert.AreNotEqual(initialTarget, finalTarget);
-    // }
+    private readonly int[] AddToY_EveryKRequests_X = { 5, 2 };
+
+    [TestMethod]
+    public void AddToY_EveryKRequests()
+    {
+        DataPlus dp = new(AddToY_EveryKRequests_X, ONE_MIN_LENGTH, ONE_MIN_LENGTH);
+
+        int k = AddToY_EveryKRequests_X.Last();
+
+        int[] initialTarget = dp.Target(10);
+        for (int i = 0; i < k * 2; i++)
+        {
+            dp.Any();
+        }
+
+        int[] finalTarget = dp.Target(10);
+        CollectionAssert.AreNotEqual(initialTarget, finalTarget);
+    }
 
     // =========================================================================
     // --------------------------- HELPER METHODS ------------------------------

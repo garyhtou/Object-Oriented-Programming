@@ -4,10 +4,10 @@ public class DataPlus : DataExtractor
 {
     public DataPlus(int[] x, uint xMinLength, uint yMinLength) : base(x, xMinLength, yMinLength)
     {
-        k = xVals.Last();
-
         int a = xVals.First();
         AddY(a, throwException: true);
+
+        k = yVals.Last() + 1;
     }
 
     public override int[] Target(uint z)
@@ -47,12 +47,8 @@ public class DataPlus : DataExtractor
 
         if (totalRequests % k == 0)
         {
+            AddY(j * k, throwException: true);
             j++;
-        }
-
-        if (totalRequests == j * k)
-        {
-            AddY(totalRequests, throwException: true);
         }
     }
 
