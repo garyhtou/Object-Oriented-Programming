@@ -19,8 +19,7 @@ public class DataHalf : DataExtractor
 
         if (ShouldNewAny())
         {
-            totalRequests--; // Account for Any()'s BeforeRequest()
-            previousAny = base.Any(); // TODO: move to helper
+            previousAny = base.AnyHelper();
         }
 
         return previousAny;

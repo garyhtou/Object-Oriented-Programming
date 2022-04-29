@@ -47,31 +47,7 @@
         {
             BeforeRequest();
 
-            bool toggle = true;
-            int minLen = Math.Min(xVals.Length, yVals.Length);
-
-            int[] composite = { };
-
-            // Alternate adding elements from both array
-            for (int i = 0; i < minLen; i++)
-            {
-                int valsIndex = (i + anyOffset);
-                int newVal;
-                if (toggle)
-                {
-                    newVal = xVals[valsIndex % xVals.Length];
-                }
-                else
-                {
-                    newVal = yVals[valsIndex % yVals.Length];
-                }
-
-                AppendToArray(ref composite, newVal);
-                toggle = !toggle;
-            }
-
-            anyOffset++;
-            return composite;
+            return AnyHelper();
         }
 
         public virtual int[] Target(uint z)
@@ -156,6 +132,35 @@
 
             AppendToArray(ref yVals, y);
             return true;
+        }
+
+        protected int[] AnyHelper()
+        {
+            bool toggle = true;
+            int minLen = Math.Min(xVals.Length, yVals.Length);
+
+            int[] composite = { };
+
+            // Alternate adding elements from both array
+            for (int i = 0; i < minLen; i++)
+            {
+                int valsIndex = (i + anyOffset);
+                int newVal;
+                if (toggle)
+                {
+                    newVal = xVals[valsIndex % xVals.Length];
+                }
+                else
+                {
+                    newVal = yVals[valsIndex % yVals.Length];
+                }
+
+                AppendToArray(ref composite, newVal);
+                toggle = !toggle;
+            }
+
+            anyOffset++;
+            return composite;
         }
 
         private int[] TargetHelper(uint z)
