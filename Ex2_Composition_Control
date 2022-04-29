@@ -1,0 +1,24 @@
+POWER (benefit)
+- Composition is more flexible and less coupled
+- Composition allows for varying cardiality
+- Inheritance uses a is-a relationship, Composition is has-a
+- Inheritance strongly depends on base classes
+- Inheritance is easier for building ontop of existing types (closely related functionality)
+- Composition allows for delayed instansitation
+- Composition allows for replacement
+
+
+RESPONSIBLITY (cost)
+- Inheritance is more rigid, less flexible
+- Inheritance has greater overhead (due to virtual functions and unnecessary allocation)
+- Composition with delayed instanstation required existance/state checking
+- Composition may require the programmer to handle more memory (allocation/deallocation, function pointers)
+- With Inheritance, you can't replace the parent
+
+
+LANGUAGE DIFFERENCES (betwen C# and C++)
+- C++ does not required the `override` keyword
+- C++ allows for private and protected inheritance. C# only allows for public inheritance
+- In C# to call as parent's method, you use the `base` keyword. In C++, you use the Parent's type as a scope selector (`ParentClass::myMethod()`)
+- C++ alows for multi-class inheritance
+- C++ requires a base class handle (pointer) to access overridden virtual methods
