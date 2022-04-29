@@ -65,7 +65,7 @@
                     newVal = yVals[valsIndex % yVals.Length];
                 }
 
-                composite = AppendToArray(composite, newVal);
+                AppendToArray(ref composite, newVal);
                 toggle = !toggle;
             }
 
@@ -77,7 +77,7 @@
         {
             BeforeRequest();
 
-            bool even = totalRequests % 2 == 0;
+            bool even = z % 2 == 0;
             int[] output = { };
 
             for (int i = 0; i < xVals.Length; i++)
@@ -89,7 +89,7 @@
 
                 if (xVals[i] % 2 == (even ? 0 : 1))
                 {
-                    output = AppendToArray(output, xVals[i]);
+                    AppendToArray(ref output, xVals[i]);
                 }
             }
 
@@ -98,11 +98,11 @@
 
         public int Sum(uint z)
         {
-            int[] target = Target();
-            BeforeRequest();
+            // Target() calls BeforeRequest().
+            int[] target = Target(z);
 
             int output = 0;
-            foreach (int val in Target(z))
+            foreach (int val in target)
             {
                 output += val;
             }
@@ -150,7 +150,7 @@
                 return false;
             }
 
-            xVals = AppendToArray(xVals, x);
+            AppendToArray(ref xVals, x);
             return true;
         }
 
@@ -164,13 +164,13 @@
                 return false;
             }
 
-            yVals = AppendToArray(yVals, y);
+            AppendToArray(ref yVals, y);
             return true;
         }
 
-        protected virtual void BeforeRequest(bool increment = true)
+        protected virtual void BeforeRequest()
         {
-            if (increment) totalRequests++;
+            totalRequests++;
 
             if (IsDeactivated())
             {
@@ -184,7 +184,7 @@
             return xVals.Length < xMinLength || yVals.Length < yMinLength;
         }
 
-        protected static int[] AppendToArray(int[] arr, int val)
+        protected static void AppendToArray(ref int[] arr, int val)
         {
             int[] newArr = new int[arr.Length + 1];
             for (int i = 0; i < arr.Length; i++)
@@ -193,7 +193,7 @@
             }
 
             newArr[arr.Length] = val;
-            return newArr;
+            arr = newArr;
         }
 
         private static bool ArrayContains(int[] arr, int val)

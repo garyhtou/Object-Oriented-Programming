@@ -18,7 +18,7 @@ public class DataPlus : DataExtractor
         {
             if (x % 2 == 1)
             {
-                output = AppendToArray(output, x);
+                AppendToArray(ref output, x);
             }
         }
 
@@ -26,14 +26,14 @@ public class DataPlus : DataExtractor
         {
             if (y % 2 == 0)
             {
-                output = AppendToArray(output, y);
+                AppendToArray(ref output, y);
             }
         }
 
         return output;
     }
 
-    protected override void BeforeRequest(bool increment = true)
+    protected override void BeforeRequest()
     {
         base.BeforeRequest();
 

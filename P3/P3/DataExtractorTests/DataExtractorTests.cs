@@ -94,7 +94,7 @@ public class DataExtractorTests
         DataExtractor de = new(oneToFiveArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = de.Target(10);
 
-        Assert.AreEqual(Target_WithValidAndEven_ReturnsEven_Expected, results);
+        CollectionAssert.AreEqual(Target_WithValidAndEven_ReturnsEven_Expected, results);
     }
 
     private readonly int[] Target_WithValidAndOdd_ReturnsOdd_Expected = { 1, 3, 5 };
@@ -105,7 +105,7 @@ public class DataExtractorTests
         DataExtractor de = new(oneToTenArray, FIVE_MIN_LENGTH, FIVE_MIN_LENGTH);
         int[] results = de.Target(3);
 
-        Assert.AreEqual(Target_WithValidAndOdd_ReturnsOdd_Expected, results);
+        CollectionAssert.AreEqual(Target_WithValidAndOdd_ReturnsOdd_Expected, results);
     }
 
     [TestMethod]
@@ -160,14 +160,6 @@ public class DataExtractorTests
         DataExtractor de = DataExtractor_Active_Factory();
         de.Sum(10);
         Assert.IsTrue(de.IsActive());
-    }
-
-    [TestMethod]
-    public void Sum_withDeactivated_IsDeactivated()
-    {
-        DataExtractor de = DataExtractor_Deactivated_Factory();
-        de.Sum(10);
-        Assert.IsTrue(de.IsDeactivated());
     }
 
     // =========================================================================
