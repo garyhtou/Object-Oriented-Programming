@@ -12,21 +12,29 @@ public class DataPlus : DataExtractor
 
     public override int[] Target(uint z)
     {
+        BeforeRequest();
+
         int[] output = { };
+        int numZ = 0;
 
         foreach (int x in xVals)
         {
+            if (numZ == z) break;
             if (x % 2 == 1)
             {
                 AppendToArray(ref output, x);
+                numZ++;
             }
         }
 
+        numZ = 0;
         foreach (int y in yVals)
         {
+            if (numZ == z) break;
             if (y % 2 == 0)
             {
                 AppendToArray(ref output, y);
+                numZ++;
             }
         }
 

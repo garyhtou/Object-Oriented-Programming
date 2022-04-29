@@ -14,22 +14,42 @@ public class DataHalf : DataExtractor
 
     public override int[] Any()
     {
+        anyRequests++;
+        BeforeRequest();
+
         if (ShouldNewAny())
         {
+            totalRequests--; // Account for Any()'s BeforeRequest()
             previousAny = base.Any();
         }
 
-        anyRequests++;
         return previousAny;
+    }
+
+    public bool IsDeactivated()
+    {
+        return state == State.Deactivated;
+    }
+
+    private void MarkDeactivated()
+    {
+        failedRequests++;
+        state = State.Deactivated;
+        throw new Exception("Invalid request. Object is Deactivated");
     }
 
     protected override void BeforeRequest()
     {
-        base.BeforeRequest();
+        totalRequests++;
 
         if (failedRequests >= failureLimit)
         {
             MarkDeactivated();
+        }
+
+        if (IsInactive())
+        {
+            MarkInactive();
         }
     }
 
@@ -39,7 +59,6 @@ public class DataHalf : DataExtractor
 
     private bool ShouldNewAny()
     {
-        int rem = anyRequests % 4;
-        return previousAny is null || rem is 0 or 1;
+        return previousAny is null || anyRequests % 2 == 1;
     }
 }

@@ -3,6 +3,7 @@
     public enum State
     {
         Active,
+        Inactive,
         Deactivated
     }
 
@@ -32,13 +33,13 @@
             {
                 if (!AddX(currX) || !AddY(currX * 2))
                 {
-                    state = State.Deactivated;
+                    state = State.Inactive;
                 }
             }
 
             if (HasInvalidLengths())
             {
-                state = State.Deactivated;
+                state = State.Inactive;
             }
         }
 
@@ -77,29 +78,14 @@
         {
             BeforeRequest();
 
-            bool even = z % 2 == 0;
-            int[] output = { };
-
-            for (int i = 0; i < xVals.Length; i++)
-            {
-                if (output.Length == z)
-                {
-                    break;
-                }
-
-                if (xVals[i] % 2 == (even ? 0 : 1))
-                {
-                    AppendToArray(ref output, xVals[i]);
-                }
-            }
-
-            return output;
+            return TargetHelper(z);
         }
 
         public int Sum(uint z)
         {
-            // Target() calls BeforeRequest().
-            int[] target = Target(z);
+            BeforeRequest();
+
+            int[] target = TargetHelper(z);
 
             int output = 0;
             foreach (int val in target)
@@ -117,7 +103,7 @@
         private readonly int xMinLength;
         private readonly int yMinLength;
 
-        private State state = State.Active;
+        protected State state = State.Active;
         protected int totalRequests = 0;
         protected int failedRequests = 0;
 
@@ -128,19 +114,23 @@
             return state == State.Active;
         }
 
-        public bool IsDeactivated()
+        public bool IsInactive()
         {
-            return state == State.Deactivated;
+            return state == State.Inactive;
         }
 
-        protected void MarkDeactivated()
+        protected void MarkInactive()
         {
             failedRequests++;
-            state = State.Deactivated;
+            if (state != State.Deactivated)
+            {
+                state = State.Inactive;
+            }
+
             throw new Exception("Invalid request");
         }
 
-        protected bool AddX(int x, bool throwException = false)
+        private bool AddX(int x, bool throwException = false)
         {
             if (ArrayContains(xVals, x))
             {
@@ -168,11 +158,32 @@
             return true;
         }
 
+        private int[] TargetHelper(uint z)
+        {
+            bool even = z % 2 == 0;
+            int[] output = { };
+
+            for (int i = 0; i < xVals.Length; i++)
+            {
+                if (output.Length == z)
+                {
+                    break;
+                }
+
+                if (xVals[i] % 2 == (even ? 0 : 1))
+                {
+                    AppendToArray(ref output, xVals[i]);
+                }
+            }
+
+            return output;
+        }
+
         protected virtual void BeforeRequest()
         {
             totalRequests++;
 
-            if (IsDeactivated())
+            if (IsInactive())
             {
                 failedRequests++;
                 throw new Exception("Invalid request");
