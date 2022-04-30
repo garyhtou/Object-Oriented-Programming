@@ -85,6 +85,11 @@
 
         private int anyOffset = 0;
 
+        public State GetState()
+        {
+            return state;
+        }
+
         public bool IsActive()
         {
             return state == State.Active;

@@ -17,7 +17,7 @@ public class DataHalf : DataExtractor
         anyRequests++;
         BeforeRequest();
 
-        if (ShouldNewAny())
+        if (ShouldNewAny() || previousAny is null)
         {
             previousAny = base.AnyHelper();
         }
@@ -58,6 +58,6 @@ public class DataHalf : DataExtractor
 
     private bool ShouldNewAny()
     {
-        return previousAny is null || anyRequests % 2 == 1;
+        return anyRequests % 2 == 1;
     }
 }
