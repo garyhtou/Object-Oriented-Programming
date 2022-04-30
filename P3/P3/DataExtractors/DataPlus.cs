@@ -2,6 +2,14 @@ namespace DataExtractors;
 
 public class DataPlus : DataExtractor
 {
+    // Preconditions:
+    //   - Length of `x` must be greater than 0.
+    //   - `xMinLength` must be greater than 0.
+    //   - `yMinLength` must be greater than 0.
+    // Postconditions:
+    //   - Active
+    //   - Inactive (if `x` contains duplicate elements, or if `x` and `y`
+    //     arrays are shorter than their respective `MinLength`)
     public DataPlus(int[] x, uint xMinLength, uint yMinLength) : base(x, xMinLength, yMinLength)
     {
         int a = xVals.First();
@@ -10,6 +18,11 @@ public class DataPlus : DataExtractor
         k = yVals.Last() + 1;
     }
 
+    // Preconditions: none
+    // Postconditions:
+    //   - Active
+    //   - Inactive (will throw Exception)
+    //   - Deactivated (will throw Exception)
     public override int[] Target(uint z)
     {
         BeforeRequest();

@@ -9,6 +9,14 @@
 
     public class DataExtractor
     {
+        // Preconditions:
+        //   - Length of `x` must be greater than 0.
+        //   - `xMinLength` must be greater than 0.
+        //   - `yMinLength` must be greater than 0.
+        // Postconditions:
+        //   - Active
+        //   - Inactive (if `x` contains duplicate elements, or if `x` and `y`
+        //     arrays are shorter than their respective `MinLength`)
         public DataExtractor(int[] x, uint xMinLength, uint yMinLength)
         {
             if (x.Length == 0)
@@ -43,6 +51,10 @@
             }
         }
 
+        // Preconditions: none
+        // Postconditions:
+        //   - Active
+        //   - Inactive (will throw Exception)
         public virtual int[] Any()
         {
             BeforeRequest();
@@ -50,6 +62,11 @@
             return AnyHelper();
         }
 
+
+        // Preconditions: none
+        // Postconditions:
+        //   - Active
+        //   - Inactive (will throw Exception)
         public virtual int[] Target(uint z)
         {
             BeforeRequest();
@@ -57,6 +74,10 @@
             return TargetHelper(z);
         }
 
+        // Preconditions: none
+        // Postconditions:
+        //   - Active
+        //   - Inactive (will throw Exception)
         public int Sum(uint z)
         {
             BeforeRequest();
@@ -73,6 +94,27 @@
         }
 
 
+        // Preconditions: none
+        // Postconditions: none
+        public State GetState()
+        {
+            return state;
+        }
+
+        // Preconditions: none
+        // Postconditions: none
+        public bool IsActive()
+        {
+            return state == State.Active;
+        }
+
+        // Preconditions: none
+        // Postconditions: none
+        public bool IsInactive()
+        {
+            return state == State.Inactive;
+        }
+
         protected int[] xVals = { };
         protected int[] yVals = { };
 
@@ -84,21 +126,6 @@
         protected int failedRequests = 0;
 
         private int anyOffset = 0;
-
-        public State GetState()
-        {
-            return state;
-        }
-
-        public bool IsActive()
-        {
-            return state == State.Active;
-        }
-
-        public bool IsInactive()
-        {
-            return state == State.Inactive;
-        }
 
         protected void MarkInactive()
         {

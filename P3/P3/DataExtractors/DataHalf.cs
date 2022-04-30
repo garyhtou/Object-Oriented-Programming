@@ -2,6 +2,14 @@ namespace DataExtractors;
 
 public class DataHalf : DataExtractor
 {
+    // Preconditions:
+    //   - Length of `x` must be greater than 0.
+    //   - `xMinLength` must be greater than 0.
+    //   - `yMinLength` must be greater than 0.
+    // Postconditions:
+    //   - Active
+    //   - Inactive (if `x` contains duplicate elements, or if `x` and `y`
+    //     arrays are shorter than their respective `MinLength`)
     public DataHalf(int[] x, uint xMinLength, uint yMinLength) : base(x, xMinLength, yMinLength)
     {
         failureLimit = xVals.Last();
@@ -12,6 +20,11 @@ public class DataHalf : DataExtractor
         }
     }
 
+    // Preconditions: none
+    // Postconditions:
+    //   - Active
+    //   - Inactive (will throw Exception)
+    //   - Deactivated (will throw Exception)
     public override int[] Any()
     {
         anyRequests++;
@@ -25,6 +38,8 @@ public class DataHalf : DataExtractor
         return previousAny;
     }
 
+    // Preconditions: none
+    // Postconditions: none
     public bool IsDeactivated()
     {
         return state == State.Deactivated;
