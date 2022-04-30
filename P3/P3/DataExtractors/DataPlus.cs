@@ -46,7 +46,6 @@ public class DataPlus : DataExtractor
     // Postconditions:
     //   - Active
     //   - Inactive (will throw Exception)
-    //   - Deactivated (will throw Exception)
     public override int[] Target(uint z)
     {
         BeforeRequest();
