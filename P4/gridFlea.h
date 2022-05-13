@@ -87,7 +87,7 @@ public:
     void revive(unsigned int energy);
 
     /*
-     * Preconditions: GridFlea is Active
+     * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
      * Postconditions:
      *   - GridFlea is Active (if x/y are both on or within the grid bound)
      *   - GridFlea is Inactive (if either x/y is between the active bound and grid
@@ -125,6 +125,34 @@ public:
      * Postconditions: none
      */
     bool isDead();
+
+    GridFlea operator+(const int &rhs) const;
+
+    GridFlea &operator+=(const int &rhs);
+
+    GridFlea operator-(const int &rhs) const;
+
+    GridFlea &operator-=(const int &rhs);
+
+    GridFlea operator+(const GridFlea &rhs) const;
+
+    GridFlea &operator+=(const GridFlea &rhs);
+
+    GridFlea operator-(const GridFlea &rhs) const;
+
+    GridFlea &operator-=(const GridFlea &rhs);
+
+    bool operator==(GridFlea &rhs);
+
+    bool operator!=(GridFlea &rhs);
+
+    bool operator<(GridFlea &rhs);
+
+    bool operator>(GridFlea &rhs);
+
+    bool operator<=(GridFlea &rhs);
+
+    bool operator>=(GridFlea &rhs);
 
 private:
     static const int BOUND_X = 1000;

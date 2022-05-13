@@ -181,6 +181,75 @@ bool GridFlea::isDead() {
     return getState() == Dead;
 }
 
+GridFlea GridFlea::operator+(const int &rhs) const {
+    GridFlea temp(*this);
+    temp.move(rhs);
+    return temp;
+}
+
+GridFlea &GridFlea::operator+=(const int &rhs) {
+    move(rhs);
+    return *this;
+}
+
+GridFlea GridFlea::operator-(const int &rhs) const {
+    return *this + (-rhs);
+}
+
+GridFlea &GridFlea::operator-=(const int &rhs) {
+    return *this += (-rhs);
+}
+
+GridFlea GridFlea::operator+(const GridFlea &rhs) const {
+    GridFlea temp(*this);
+    temp.x += rhs.x;
+    temp.y += rhs.y;
+    return temp;
+}
+
+GridFlea &GridFlea::operator+=(const GridFlea &rhs) {
+    x += rhs.x;
+    y += rhs.y;
+    return *this;
+}
+
+GridFlea GridFlea::operator-(const GridFlea &rhs) const {
+    GridFlea temp(*this);
+    temp.x -= rhs.x;
+    temp.y -= rhs.y;
+    return temp;
+}
+
+GridFlea &GridFlea::operator-=(const GridFlea &rhs) {
+    x -= rhs.x;
+    y -= rhs.y;
+    return *this;
+}
+
+bool GridFlea::operator==(GridFlea &rhs) {
+    return this->value() == rhs.value();
+}
+
+bool GridFlea::operator!=(GridFlea &rhs) {
+    return !(*this == rhs);
+}
+
+bool GridFlea::operator<(GridFlea &rhs) {
+    return this->value() < rhs.value();
+}
+
+bool GridFlea::operator>(GridFlea &rhs) {
+    return this->value() > rhs.value();
+}
+
+bool GridFlea::operator<=(GridFlea &rhs) {
+    return this->value() <= rhs.value();
+}
+
+bool GridFlea::operator>=(GridFlea &rhs) {
+    return this->value() >= rhs.value();
+}
+
 /*
  * =============================================================================
  * ----------------------------- PRIVATE METHODS -------------------------------

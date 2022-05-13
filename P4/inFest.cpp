@@ -114,7 +114,79 @@ int Infest::maxValue() {
     return extremeValue(MAX);
 }
 
-int Infest::extremeValue(Extreme e) {
+Infest Infest::operator+(const Infest &rhs) const {
+    Infest temp(*this);
+
+    for (int i = 0; i < rhs.severity; i++) {
+        temp.appendGridFlea(*rhs.getGridFlea(i));
+    }
+
+    return temp;
+}
+
+Infest &Infest::operator+=(const Infest &rhs) {
+    for (int i = 0; i < rhs.severity; i++) {
+        appendGridFlea(*rhs.getGridFlea(i));
+    }
+
+    return *this;
+}
+
+Infest Infest::operator+(const GridFlea &rhs) const {
+    Infest temp(*this);
+    temp.appendGridFlea(rhs);
+    return temp;
+}
+
+Infest &Infest::operator+=(const GridFlea &rhs) {
+    appendGridFlea(rhs);
+    return *this;
+}
+
+Infest &Infest::operator++() { // prefix
+    GridFlea *flea = birthGridFlea(severity);
+    appendGridFlea(*flea);
+    delete flea;
+
+    return *this;
+}
+
+
+Infest Infest::operator++(int _) { // postfix
+    Infest temp(*this);
+    ++(*this);
+    return temp;
+}
+
+GridFlea const &Infest::operator[](size_t index) const {
+    return *getGridFlea(index);
+}
+
+bool Infest::operator==(const Infest &rhs) const {
+    return this->extremeRange() == rhs.extremeRange();
+}
+
+bool Infest::operator!=(const Infest &rhs) const {
+    return !(*this == rhs);
+}
+
+bool Infest::operator<(const Infest &rhs) const {
+    return this->extremeRange() < rhs.extremeRange();
+}
+
+bool Infest::operator>(const Infest &rhs) const {
+    return this->extremeRange() > rhs.extremeRange();
+}
+
+bool Infest::operator<=(const Infest &rhs) const {
+    return this->extremeRange() <= rhs.extremeRange();
+}
+
+bool Infest::operator>=(const Infest &rhs) const {
+    return this->extremeRange() >= rhs.extremeRange();
+}
+
+int Infest::extremeValue(Extreme e) const {
     int currExtreme = 0;
     bool first = true;
 
@@ -133,6 +205,10 @@ int Infest::extremeValue(Extreme e) {
     }
 
     return currExtreme;
+}
+
+int Infest::extremeRange() const {
+    return extremeValue(MAX) - extremeValue(MIN);
 }
 
 void Infest::reproduce() {
@@ -194,6 +270,18 @@ GridFlea *Infest::birthGridFlea(int nonce) const {
 
 GridFlea *Infest::getGridFlea(int index) const {
     return fleas[index];
+}
+
+void Infest::appendGridFlea(const GridFlea &src) {
+    GridFlea **temp = new GridFlea *[severity];
+    for (int i = 0; i < severity - 1; i++) {
+        temp[i] = fleas[i];
+    }
+    temp[severity] = new GridFlea(src);
+
+    delete[] fleas;
+    fleas = temp;
+    severity++;
 }
 
 void Infest::copy(const Infest &src) {

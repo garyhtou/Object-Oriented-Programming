@@ -92,6 +92,32 @@ public:
      */
     int maxValue();
 
+    Infest operator+(const Infest &rhs) const;
+
+    Infest &operator+=(const Infest &rhs);
+
+    Infest operator+(const GridFlea &rhs) const;
+
+    Infest &operator+=(const GridFlea &rhs);
+
+    Infest &operator++(); // prefix
+
+    Infest operator++(int x); // postfix
+
+    GridFlea const &operator[](size_t index) const;
+
+    bool operator==(const Infest &rhs) const;
+
+    bool operator!=(const Infest &rhs) const;
+
+    bool operator<(const Infest &rhs) const;
+
+    bool operator>(const Infest &rhs) const;
+
+    bool operator<=(const Infest &rhs) const;
+
+    bool operator>=(const Infest &rhs) const;
+
 private:
     const unsigned int REVIVE_ENERGY = 10;
     unsigned int severity = 0;
@@ -103,7 +129,9 @@ private:
         MAX
     };
 
-    int extremeValue(Extreme e);
+    int extremeValue(Extreme e) const;
+
+    int extremeRange() const;
 
     void reproduce();
 
@@ -112,6 +140,8 @@ private:
     GridFlea *birthGridFlea(int index) const;
 
     GridFlea *getGridFlea(int index) const;
+
+    void appendGridFlea(const GridFlea &src);
 
     void copy(const Infest &src);
 
