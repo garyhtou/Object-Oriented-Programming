@@ -152,7 +152,7 @@ Infest &Infest::operator++() { // prefix
 }
 
 
-Infest Infest::operator++(int _) { // postfix
+Infest Infest::operator++(int _x) { // postfix
     Infest temp(*this);
     ++(*this);
     return temp;
@@ -167,7 +167,7 @@ bool Infest::operator==(const Infest &rhs) const {
 }
 
 bool Infest::operator!=(const Infest &rhs) const {
-    return !(*this == rhs);
+    return this->extremeRange() != rhs.extremeRange();
 }
 
 bool Infest::operator<(const Infest &rhs) const {
@@ -273,8 +273,8 @@ GridFlea *Infest::getGridFlea(int index) const {
 }
 
 void Infest::appendGridFlea(const GridFlea &src) {
-    GridFlea **temp = new GridFlea *[severity];
-    for (int i = 0; i < severity - 1; i++) {
+    GridFlea **temp = new GridFlea *[severity + 1];
+    for (int i = 0; i < severity; i++) {
         temp[i] = fleas[i];
     }
     temp[severity] = new GridFlea(src);

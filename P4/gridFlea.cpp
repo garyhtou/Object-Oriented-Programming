@@ -231,7 +231,7 @@ bool GridFlea::operator==(GridFlea &rhs) {
 }
 
 bool GridFlea::operator!=(GridFlea &rhs) {
-    return !(*this == rhs);
+    return this->value() != rhs.value();
 }
 
 bool GridFlea::operator<(GridFlea &rhs) {
