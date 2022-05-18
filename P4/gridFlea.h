@@ -132,26 +132,70 @@ public:
 
     GridFlea operator-(const int &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     GridFlea &operator-=(const int &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     GridFlea operator+(const GridFlea &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     GridFlea &operator+=(const GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     GridFlea operator-(const GridFlea &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     GridFlea &operator-=(const GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator==(GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator!=(GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator<(GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator>(GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator<=(GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator>=(GridFlea &rhs);
 
 private:

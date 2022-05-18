@@ -114,6 +114,10 @@ int Infest::maxValue() {
     return extremeValue(MAX);
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest Infest::operator+(const Infest &rhs) const {
     Infest temp(*this);
 
@@ -124,6 +128,10 @@ Infest Infest::operator+(const Infest &rhs) const {
     return temp;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest &Infest::operator+=(const Infest &rhs) {
     for (int i = 0; i < rhs.severity; i++) {
         appendGridFlea(*rhs.getGridFlea(i));
@@ -132,17 +140,29 @@ Infest &Infest::operator+=(const Infest &rhs) {
     return *this;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest Infest::operator+(const GridFlea &rhs) const {
     Infest temp(*this);
     temp.appendGridFlea(rhs);
     return temp;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest &Infest::operator+=(const GridFlea &rhs) {
     appendGridFlea(rhs);
     return *this;
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest &Infest::operator++() { // prefix
     GridFlea *flea = birthGridFlea(severity);
     appendGridFlea(*flea);
@@ -151,33 +171,52 @@ Infest &Infest::operator++() { // prefix
     return *this;
 }
 
-
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 Infest Infest::operator++(int _x) { // postfix
     Infest temp(*this);
     ++(*this);
     return temp;
 }
 
-GridFlea const &Infest::operator[](size_t index) const {
-    return *getGridFlea(index);
-}
-
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator==(const Infest &rhs) const {
     return this->extremeRange() == rhs.extremeRange();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator!=(const Infest &rhs) const {
     return this->extremeRange() != rhs.extremeRange();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator<(const Infest &rhs) const {
     return this->extremeRange() < rhs.extremeRange();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator>(const Infest &rhs) const {
     return this->extremeRange() > rhs.extremeRange();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator<=(const Infest &rhs) const {
     return this->extremeRange() <= rhs.extremeRange();
 }

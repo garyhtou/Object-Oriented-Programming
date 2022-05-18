@@ -181,25 +181,65 @@ bool GridFlea::isDead() {
     return getState() == Dead;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea GridFlea::operator+(const int &rhs) const {
     GridFlea temp(*this);
     temp.move(rhs);
     return temp;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea &GridFlea::operator+=(const int &rhs) {
     move(rhs);
     return *this;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea GridFlea::operator-(const int &rhs) const {
     return *this + (-rhs);
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea &GridFlea::operator-=(const int &rhs) {
     return *this += (-rhs);
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea GridFlea::operator+(const GridFlea &rhs) const {
     GridFlea temp(*this);
     temp.x += rhs.x;
@@ -207,12 +247,28 @@ GridFlea GridFlea::operator+(const GridFlea &rhs) const {
     return temp;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea &GridFlea::operator+=(const GridFlea &rhs) {
     x += rhs.x;
     y += rhs.y;
     return *this;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea GridFlea::operator-(const GridFlea &rhs) const {
     GridFlea temp(*this);
     temp.x -= rhs.x;
@@ -220,32 +276,64 @@ GridFlea GridFlea::operator-(const GridFlea &rhs) const {
     return temp;
 }
 
+/*
+ * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Postconditions:
+ *   - GridFlea is Active (if x/y are both on or within the grid bound)
+ *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+ *     bound)
+ *   - GridFlea is Dead (if either x/y is outside the grid bound)
+ */
 GridFlea &GridFlea::operator-=(const GridFlea &rhs) {
     x -= rhs.x;
     y -= rhs.y;
     return *this;
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator==(GridFlea &rhs) {
     return this->value() == rhs.value();
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator!=(GridFlea &rhs) {
     return this->value() != rhs.value();
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator<(GridFlea &rhs) {
     return this->value() < rhs.value();
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator>(GridFlea &rhs) {
     return this->value() > rhs.value();
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator<=(GridFlea &rhs) {
     return this->value() <= rhs.value();
 }
 
+/*
+ * Preconditions: GridFlea is Active
+ * Postconditions: none (GridFlea remains in the same state)
+ */
 bool GridFlea::operator>=(GridFlea &rhs) {
     return this->value() >= rhs.value();
 }
