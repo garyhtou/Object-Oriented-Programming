@@ -23,6 +23,12 @@
 // GridFlea.
 //
 // Error Handling for GridFlea is done through throwing Exceptions.
+// GridFlea supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=), addition/subtraction with other GridFleas, and
+// addition/subtraction with integers (which serve as syntactic sugar for the
+// `move()` method).
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.
 
 #include <stdexcept>
 #include <cmath>
@@ -465,5 +471,31 @@ void GridFlea::switchDirection() {
 // The constructor takes in initial values for the GridFlea and saves them to
 // private member variables. Then, it calls the `setup()` method to set the
 // current values to the initial values.
-
+//
+// >>>> OVERLOADED OPERATORS <<<<<
+// GridFlea supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=), addition/subtraction with other GridFleas, and
+// addition/subtraction with integers (which serve as syntactic sugar for the
+// `move()` method).
+//
+// Comparison operators simply compare the `value()` of both GridFleas. This was
+// the best design for this class cause `value()` is a good representation of
+// the current state of GridFlea objects. In addition, it returns an integer
+// which can already be easily compared.
+//
+// GridFlea addition and subtraction will combine the two GridFlea's x and y
+// position. Due to the change in position, the new/modified GridFlea's state
+// may change can be Active, Inactive, or Deactivated. GridFlea's class design
+// will always check and update the state before a method call from it's public
+// API. As a result these operator methods only need to compare the x and y
+// variables. State checking and updating will be handled via the next public
+// method call!
+//
+// GridFlea also support addition and subtraction with integers! This is
+// simply just static sugar (a shorthand) for calling the `move()` method. This
+// leads to the pre/post-fix increment/decrement operators being supported too.
+//
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.
+//
 // Error handling is done through throwing Exceptions.

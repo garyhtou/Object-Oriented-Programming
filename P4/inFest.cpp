@@ -9,6 +9,11 @@
 // allows the entire infestation to `move()` in unison and for the min and max
 // values of the infestation to be calculated. Infestations will never die out.
 //
+// Infest supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=),  and addition with GridFleas and Infests.
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.
+//
 // Error Handling for GridFlea is done through throwing Exceptions.
 
 #include <stdexcept>
@@ -439,3 +444,20 @@ void Infest::destroy() {
 // of initial value. These initial values are calculated by simply multiplying
 // the `nonce` by a constant. This method will return the pointer to a GridFlea
 // on the heap.
+//
+// >>>> OVERLOADED OPERATORS <<<<<
+// Infest supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=),  and addition with GridFleas and Infests.
+//
+// Infest supports the addition of two Infest object. This will simply add the
+// GridFleas from both Infest objects together. You can also add a GridFlea to
+// an Infest object (myInfest + myGridFlea) to append that GridFlea to the
+// existing array to GridFleas. The Infest class does not support subtraction
+// that is extremely ambiguous and does not give the client enough predictable
+// control over behavior of the Infest. Since GridFleas are managed internally
+// by the infest and are all created by the infest on instantiation, it also
+// support the pre/post-fix increment operator to easily increase the number of
+// GridFleas in the Infest. A newly generated GridFlea will be appended to the
+// array.
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.

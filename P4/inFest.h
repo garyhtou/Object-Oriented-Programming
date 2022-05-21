@@ -9,6 +9,9 @@
 // allows the entire infestation to `move()` in unison and for the min and max
 // values of the infestation to be calculated. Infestations will never die out.
 //
+// Infest supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=),  and addition with GridFleas and Infests.
+//
 // Error Handling for GridFlea is done through throwing Exceptions.
 
 // =============================================================================
@@ -28,6 +31,11 @@
 //   - Calculates the minimum value of the entire infestation.
 // `maxValue()`:
 //   - Calculates the maximum value of the entire infestation.
+//
+// Infest supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=),  and addition with GridFleas and Infests.
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.
 
 #ifndef INFEST_H
 #define INFEST_H

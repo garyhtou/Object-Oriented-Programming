@@ -13,6 +13,13 @@
 // or Dead (deactivated) state. Its State largely depends on the position of the
 // GridFlea.
 //
+// GridFlea supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=), addition/subtraction with other GridFleas, and
+// addition/subtraction with integers (which serve as syntactic sugar for the
+// `move()` method).
+// All addition and subtraction operators support both destructive and
+// non-destructive methods.
+//
 // Error Handling for GridFlea is done through throwing Exceptions.
 
 // =============================================================================
@@ -48,6 +55,11 @@
 //   - `isActive()`: Whether the GridFlea is in an Active state.
 //   - `isInactive()`: Whether the GridFlea is in an Inactive state.
 //   - `isDead()`: Whether the GridFlea is in a Dead state.
+//
+// GridFlea supports numerous overloaded operators including comparison (>, <,
+// >, <=, ==, !=), addition with other GridFleas, and addition with integers
+// (which serve as syntactic sugar for the `move()` method).
+// Comparison operators will compare the `value()` of the given GridFleas.
 
 #ifndef GRIDFLEA_H
 #define GRIDFLEA_H
