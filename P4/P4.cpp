@@ -67,6 +67,27 @@ void printVals(shared_ptr<Infest> infest, string prefix) {
          << infest->maxValue() << endl;
 }
 
+void compare(shared_ptr<Infest> original, shared_ptr<Infest> cloned) {
+    cout << PRINT_PREFIX << "original < cloned: " << (original < cloned
+                                                      ? "true" : "false")
+         << endl;
+    cout << PRINT_PREFIX << "original <= cloned: " << (original <= cloned
+                                                       ? "true" : "false")
+         << endl;;
+    cout << PRINT_PREFIX << "original > cloned: " << (original > cloned
+                                                      ? "true" : "false")
+         << endl;;
+    cout << PRINT_PREFIX << "original <= cloned: " << (original <= cloned
+                                                       ? "true" : "false")
+         << endl;;
+    cout << PRINT_PREFIX << "original == cloned: " << (original == cloned
+                                                       ? "true" : "false")
+         << endl;;
+    cout << PRINT_PREFIX << "original != cloned: " << (original != cloned
+                                                       ? "true" : "false")
+         << endl;;
+}
+
 const int MOVE1_TIMES = 5;
 const int MOVE2_TIMES = 3;
 const int MOVE3_TIMES = 5;
@@ -91,12 +112,15 @@ void run(shared_ptr<Infest> &infest, int id) {
     moveBoth(infest, clonedInfest, MOVE3_TIMES);
     printVals(infest, ORIGINAL_PREFIX);
     printVals(clonedInfest, CLONED_PREFIX);
+    compare(infest, clonedInfest);
 
     move(infest, MOVE4_TIMES, "Original");
     printVals(infest, CLONED_PREFIX);
 
     move(clonedInfest, MOVE4_TIMES, "Cloned");
     printVals(clonedInfest, ORIGINAL_PREFIX);
+
+    compare(infest, clonedInfest);
 
     cout << "=== Finished Running Infest #" << id << " ===\n" << endl;
 }
