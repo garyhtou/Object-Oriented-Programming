@@ -233,7 +233,7 @@ GridFlea &GridFlea::operator-=(const int &rhs) {
 }
 
 /*
- * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Preconditions: none
  * Postconditions:
  *   - GridFlea is Active (if x/y are both on or within the grid bound)
  *   - GridFlea is Inactive (if either x/y is between the active bound and grid
@@ -248,7 +248,7 @@ GridFlea GridFlea::operator+(const GridFlea &rhs) const {
 }
 
 /*
- * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Preconditions: none
  * Postconditions:
  *   - GridFlea is Active (if x/y are both on or within the grid bound)
  *   - GridFlea is Inactive (if either x/y is between the active bound and grid
@@ -262,7 +262,7 @@ GridFlea &GridFlea::operator+=(const GridFlea &rhs) {
 }
 
 /*
- * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Preconditions: none
  * Postconditions:
  *   - GridFlea is Active (if x/y are both on or within the grid bound)
  *   - GridFlea is Inactive (if either x/y is between the active bound and grid
@@ -277,7 +277,7 @@ GridFlea GridFlea::operator-(const GridFlea &rhs) const {
 }
 
 /*
- * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+ * Preconditions: none
  * Postconditions:
  *   - GridFlea is Active (if x/y are both on or within the grid bound)
  *   - GridFlea is Inactive (if either x/y is between the active bound and grid

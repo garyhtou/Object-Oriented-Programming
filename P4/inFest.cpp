@@ -221,6 +221,10 @@ bool Infest::operator<=(const Infest &rhs) const {
     return this->extremeRange() <= rhs.extremeRange();
 }
 
+/*
+ * Preconditions: none
+ * Postconditions: none
+ */
 bool Infest::operator>=(const Infest &rhs) const {
     return this->extremeRange() >= rhs.extremeRange();
 }

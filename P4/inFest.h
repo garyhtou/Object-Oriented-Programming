@@ -92,30 +92,76 @@ public:
      */
     int maxValue();
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest operator+(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest &operator+=(const Infest &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest operator+(const GridFlea &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest &operator+=(const GridFlea &rhs);
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest &operator++(); // prefix
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     Infest operator++(int x); // postfix
 
-    GridFlea const &operator[](size_t index) const;
-
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator==(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator!=(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator<(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator>(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator<=(const Infest &rhs) const;
 
+    /*
+     * Preconditions: none
+     * Postconditions: none
+     */
     bool operator>=(const Infest &rhs) const;
 
 private:

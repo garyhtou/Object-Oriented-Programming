@@ -126,39 +126,83 @@ public:
      */
     bool isDead();
 
+    /*
+     * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
+     */
     GridFlea operator+(const int &rhs) const;
 
+    /*
+     * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
+     */
     GridFlea &operator+=(const int &rhs);
 
+    /*
+     * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
+     */
     GridFlea operator-(const int &rhs) const;
 
     /*
-     * Preconditions: none
-     * Postconditions: none
+     * Preconditions: GridFlea is Active, or Dead and hasn't jumped before
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
      */
     GridFlea &operator-=(const int &rhs);
 
     /*
      * Preconditions: none
-     * Postconditions: none
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
      */
     GridFlea operator+(const GridFlea &rhs) const;
 
     /*
      * Preconditions: none
-     * Postconditions: none
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
      */
     GridFlea &operator+=(const GridFlea &rhs);
 
     /*
      * Preconditions: none
-     * Postconditions: none
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
      */
     GridFlea operator-(const GridFlea &rhs) const;
 
     /*
      * Preconditions: none
-     * Postconditions: none
+     * Postconditions:
+     *   - GridFlea is Active (if x/y are both on or within the grid bound)
+     *   - GridFlea is Inactive (if either x/y is between the active bound and grid
+     *     bound)
+     *   - GridFlea is Dead (if either x/y is outside the grid bound)
      */
     GridFlea &operator-=(const GridFlea &rhs);
 
