@@ -1,0 +1,26 @@
+Gary Tou
+5/23/2022
+
+Please see other file for C# code
+====================
+
+1) Explain your design choice – intent and effect
+
+When converting the multiple inheritance leapWorm C++ class to C#, I need to
+pick one of the two parent classes (leapFrog or inchWorm) to inherit from. I
+decided that the leapFrog class as most similar to the leapWorm class. The
+inchWorm class seemed to be barely used by the leapWorm class. As a result, the
+diamond class hierarchy defined in C++ could be simplified to a simple "linear"
+single parent inheritance (easily defined in C#).
+
+2) What, if any, C# interfaces did you define?  Why?
+
+No, this class hierarchy was simple since leapWorm only needs methods and data
+members already defined in leapFrog — and as result inheritances from leapFrog.
+There is no C# interfaces necessary to represent this relationship.
+
+3) Identify the impact of your design on the client
+
+With this simpler class design, the client will find a more uniform and easier
+to work with public interfaces that provides consistent results.
+
