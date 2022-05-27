@@ -1,0 +1,11 @@
+C# options
+- single inheritance w/ composition
+  - parent is the one with strong type association (`leapFrog`)
+- double composition
+  - allows for dependency injection
+  - you then need to echo functionality
+- type absorption
+  - copy and paste. but it's a maintainability problem
+- redefine type hierarchy
+  - great option when converting between languages
+
