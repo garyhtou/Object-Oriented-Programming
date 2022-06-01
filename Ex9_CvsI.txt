@@ -1,0 +1,11 @@
+Inheritance vs Composition (Design Choice Impacts)
+
+Composition:
+- Harder to read
+- Dependency injection
+  - Validating types (passing in the wrong type)
+  - Inconsistency from method injection
+  - Delayed instansitation (checking for existance)
+- Hard/impossible to do heterogenous collections
+  - There might not be a base class handle
+
