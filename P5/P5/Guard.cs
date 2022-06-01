@@ -33,7 +33,7 @@ public class Guard
         return ValueHelper(x, sArray);
     }
 
-    public void Toggle()
+    public virtual void Toggle()
     {
         mode = IsUp() ? Mode.DOWN : Mode.UP;
     }
@@ -49,15 +49,16 @@ public class Guard
     }
 
     private Mode mode = Mode.UP;
-    protected readonly int[] sArray;
+    protected int[] sArray;
 
     protected int ValueHelper(uint x, int[] arr)
     {
         int start = IsUp() ? 0 : arr.Length - 1;
         int end = IsUp() ? arr.Length : -1;
+        int dir = IsUp() ? 1 : -1;
 
         int prime = 0;
-        for (int i = start; i < end; i++)
+        for (int i = start; i < end; i += dir)
         {
             int val = arr[i];
             if (
@@ -83,7 +84,7 @@ public class Guard
         return prime;
     }
 
-    private static bool IsPrime(int val)
+    protected static bool IsPrime(int val)
     {
         if (val < 2) return false;
 
