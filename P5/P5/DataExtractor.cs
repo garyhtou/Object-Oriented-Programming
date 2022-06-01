@@ -98,6 +98,11 @@ namespace DataExtractors
         //     arrays are shorter than their respective `MinLength`)
         public DataExtractor(int[] x)
         {
+            if (x == null)
+            {
+                throw new Exception("x array must not be null");
+            }
+
             if (x.Length == 0)
             {
                 throw new Exception("x array must not be empty");
@@ -263,16 +268,18 @@ namespace DataExtractors
             bool even = z % 2 == 0;
             int[] output = { };
 
-            for (int i = 0; i < xVals.Length; i++)
+            int[] arr = totalRequests % 2 == 0 ? xVals : yVals;
+
+            for (int i = 0; i < arr.Length; i++)
             {
                 if (output.Length == z)
                 {
                     break;
                 }
 
-                if (xVals[i] % 2 == (even ? 0 : 1))
+                if (arr[i] % 2 == (even ? 0 : 1))
                 {
-                    AppendToArray(ref output, xVals[i]);
+                    AppendToArray(ref output, arr[i]);
                 }
             }
 
