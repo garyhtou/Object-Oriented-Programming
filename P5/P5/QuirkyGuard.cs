@@ -4,7 +4,7 @@ public class QuirkyGuard : Guard
 {
     public QuirkyGuard(int[] s) : base(s)
     {
-        toggleLimit = (uint)s[0];
+        toggleLimit = (uint)sArray[0];
     }
 
     public override int Value(uint x)
