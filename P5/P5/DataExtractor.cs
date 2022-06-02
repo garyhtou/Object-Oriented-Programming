@@ -86,7 +86,7 @@ namespace DataExtractors
         Deactivated
     }
 
-    public class DataExtractor
+    public class DataExtractor : IData
     {
         // Preconditions:
         //   - Length of `x` must be greater than 0.

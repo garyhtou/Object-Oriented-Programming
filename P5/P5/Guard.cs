@@ -6,7 +6,7 @@ public enum Mode
     DOWN
 }
 
-public class Guard
+public class Guard : IGuard
 {
     public Guard(int[] s)
     {
@@ -53,12 +53,8 @@ public class Guard
 
     protected int ValueHelper(uint x, int[] arr)
     {
-        int start = IsUp() ? 0 : arr.Length - 1;
-        int end = IsUp() ? arr.Length : -1;
-        int dir = IsUp() ? 1 : -1;
-
         int prime = 0;
-        for (int i = start; i < end; i += dir)
+        for (int i = 0; i < arr.Length; i++)
         {
             int val = arr[i];
             if (
@@ -86,7 +82,7 @@ public class Guard
 
     protected static bool IsPrime(int val)
     {
-        if (val < 2) return false;
+        if (val <= 2) return false;
 
         for (int i = 2; i < val; i++)
         {
