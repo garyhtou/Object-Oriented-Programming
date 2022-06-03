@@ -3,7 +3,7 @@ using DataExtractors;
 
 namespace P5;
 
-public abstract class DataGuard
+public abstract class DataGuard : IData, IGuard
 {
     protected DataGuard(IData data, IGuard guard)
     {
