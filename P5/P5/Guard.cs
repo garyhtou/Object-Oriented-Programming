@@ -57,6 +57,7 @@ public class Guard : IGuard
         for (int i = 0; i < arr.Length; i++)
         {
             int val = arr[i];
+            // Console.WriteLine(val);
             if (
                 (IsUp() && val <= x) ||
                 (IsDown() && val >= x)

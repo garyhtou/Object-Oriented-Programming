@@ -26,9 +26,29 @@ public abstract class DataGuard : IData, IGuard
         return data.Sum(z);
     }
 
+    public State GetState()
+    {
+        return data.GetState();
+    }
+
+    public bool IsActive()
+    {
+        return data.IsActive();
+    }
+
+    public bool IsInactive()
+    {
+        return data.IsInactive();
+    }
+
     public int Value(uint x)
     {
         return guard.Value(x);
+    }
+
+    public void Toggle()
+    {
+        guard.Toggle();
     }
 
     private readonly IData data;

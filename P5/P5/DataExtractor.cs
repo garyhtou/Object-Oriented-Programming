@@ -203,7 +203,7 @@ namespace DataExtractors
                 state = State.Inactive;
             }
 
-            throw new Exception("Invalid request");
+            throw new Exception("Object is InActive");
         }
 
         private bool AddX(int x, bool throwException = false)
@@ -293,7 +293,7 @@ namespace DataExtractors
             if (IsInactive())
             {
                 failedRequests++;
-                throw new Exception("Invalid request");
+                throw new Exception("Object is InActive");
             }
         }
 
@@ -337,7 +337,7 @@ namespace DataExtractors
 
         private uint GetMinLength(int[] array)
         {
-            for (int i = array.Length - 1; i >= 0; i++)
+            for (int i = array.Length - 1; i >= 0; i--)
             {
                 // Since the arrays may contain negatives, I return the
                 // absolute value.

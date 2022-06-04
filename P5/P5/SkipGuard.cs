@@ -26,6 +26,6 @@ public class SkipGuard : Guard
     private int GetK()
     {
         kIndex++;
-        return sArray[kIndex % sArray.Length];
+        return Math.Abs(sArray[kIndex % sArray.Length]);
     }
 }
