@@ -1,3 +1,7 @@
+// Gary Tou
+// June 3rd, 2022
+// CPSC 3200, P5
+
 using Guards;
 
 namespace P5;

@@ -18,6 +18,7 @@
 //   - The length of the `y` array is less than or equal to the `yMaxLength`.
 //   - Both the `x` and `y` arrays do not individually contain duplicate values.
 //     They each function as a "set" of unique values.
+// `xMinLength` and `yMinLength` is the last odd number in the `x` array.
 // Otherwise, the DataExtractor is Inactive.
 // In addition, the possible States of a DataExtractor, and it's descendants, is
 // stored in the `State` enum defined in the `DataExtractors` namespace. Please
@@ -28,6 +29,7 @@
 // considered as an "invalid client request" and will result in a state change
 // with an Exception being thrown.
 //
+// DataExtractor implements in the IData interface.
 // Error handling for DataExtractor and its subtypes is done through throwing
 // Exceptions.
 

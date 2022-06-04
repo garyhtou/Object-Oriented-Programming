@@ -1,3 +1,13 @@
+// Gary Tou
+// June 3rd, 2022
+// CPSC 3200, P5
+
+// =============================================================================
+// ----------------------------------- NOTE ------------------------------------
+// =============================================================================
+// Please see the DataExtractor class for more information regarding the
+// invariants and pre/post conditions.
+
 namespace DataExtractors;
 
 public interface IData

@@ -1,3 +1,20 @@
+// Gary Tou
+// June 3rd, 2022
+// CPSC 3200, P5
+
+// =============================================================================
+// ----------------------------- CLASS INVARIANTS ------------------------------
+// =============================================================================
+// This abstract class serves as a base class for all of the multiplied types.
+// Please see the DataExtractor class and Guard classes for more information.
+
+// =============================================================================
+// --------------------------- INTERFACE INVARIANTS ----------------------------
+// =============================================================================
+// The methods available in this class is defined by the IData and IGuard
+// interfaces. Please see the DataExtractor and Guard classes for more
+// information.
+
 using Guards;
 using DataExtractors;
 
@@ -54,3 +71,14 @@ public abstract class DataGuard : IData, IGuard
     private readonly IData data;
     private readonly IGuard guard;
 }
+
+// =============================================================================
+// ------------------------- IMPLEMENTATION INVARIANTS -------------------------
+// =============================================================================
+// This class serves as a simple abstract class this echos methods from a object
+// which implements the IData interface and another object that implements the
+// IGuard interface. In other words, it encapsulated those two objects.
+// The constructor of this class is protected (to be abstract) and takes in the
+// IData and IGuard objects via constructor injection. Having already
+// instantiated objects allow the descendant multiplied classes to be
+// extremely tiny.
