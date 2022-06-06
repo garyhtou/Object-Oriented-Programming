@@ -1,0 +1,50 @@
+AWS: Partner Central Data
+
+2) Discuss how contractual design was, or could be, used to document intent and/or clarify the project's primary goals
+
+Each data field within objects are classified by the sensitive of the data. For example, Public, Confidential, Critical, etc. Their system uses contractual design to define the possible sensitivity categories (Public, Critical, etc.). This can be seen on their dashboard as a dropdown. The dropdown acts as a "forced" contractual design pre-conditions of the possible categories that may be inputed.
+
+3) Identify what design principles studied in 3200 were relevant.  Support your answer(s).
+
+Their dashboard allows users with varying permission levels to access or modify data. For example only admins can modify data, while any user is able to view the data.
+These permission levels are analogous to accessibility keywords seen in object orientated design for classes (public, protected, and private). The dashboard authentication system protected (encapsulates) data and prevent modification and access when necessary.
+
+In addition, their dashboard utilizes React which is composed of React components. This is every similar to C++/C# classes. They encapsulate data in addition to rendering/displaying that data to the screen.
+
+
+AWS: Well-Architected Scoring System
+
+2) Discuss how contractual design was, or could be, used to document intent and/or clarify the project's primary goals
+
+In order to analyze each partner from the APN, they first must collect/scrape that data which can later be ran through NLP models (Amazon Comprehend). After using NLP to pull out keywords these keywords are then compared with another set of keywords which was collected/scraped from another source. Although they did not mention it specifically, contractual designs (pre/post conditions) should be used here to specify what the NLP models expect as inputs and the possible state changes.
+
+3) Identify what design principles studied in 3200 were relevant.  Support your answer(s).
+
+They did not focus much on their code design, however, the entire process can be seen as a single class composed of all of the different NLP models. That class would then coordinate passing data between the NLP models (objects).
+
+
+AWS: Well Architected Scoring
+
+2) Discuss how contractual design was, or could be, used to document intent and/or clarify the project's primary goals
+
+This project utilized a survey to collect data about specific deployments, then later analyize agaisnt the six AWS Well-Architected pillars (OPEXC, SECURITY, COST, etc.) to determine how well a deployment meets the goals of the developers. In order to do this, they needed to collect data from the survey as well as the goals of the developers (how much they are about security vs cost). These values can be represented numerically - such as 0 to 10. This limit (0 to 10) can be seen as contractual design (a pre-condition). In addition, many of the survey equations had indepth explainations which could be considered to be documentation. The documentation told clients/users how to utilize the too.
+
+
+3) Identify what design principles studied in 3200 were relevant.  Support your answer(s).
+
+The project was consisted of a pipeline that passed data from one AWS Lambda function to another. These functions allowed for low coupling since they each took care of a major step within the pipeline.
+
+
+
+AWS: Well Architected Review on Deployment (WARD)
+
+2) Discuss how contractual design was, or could be, used to document intent and/or clarify the project's primary goals
+
+This group's project was focused on integrating AWS's Well-Architecutred with CodeDeploy. Both of these AWS services have their own API which was used by the team to connect the two services together. They can use contractual design here to clarify the expected format for the inputs from these API services.
+
+AWS themselves provides what's similar to an interface invariant for their API/SDKs.
+
+3) Identify what design principles studied in 3200 were relevant.  Support your answer(s).
+
+In order to determine whether or not a deploy should be triggered, the team used reviews to formula rules. These rules are very similar to each other and have shared functionality. As a result, I would assume that they used inheritance to model/create their rules (in Java - which was the backend language they choose).
+
