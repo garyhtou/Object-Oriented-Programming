@@ -1,0 +1,4 @@
+"Make everything public": Making data public would violate encapsulation, giving the client permission to access and modify data without restriction. This removes control of data and behavior from the hands of the class designer.
+
+"Unrelated overloaded operators": Keeping functionality of similar operators consistent will important so that usage of operators is intuitive. If the + operator is defined, the += operator should be expected to be a destructive version (shortcut) of the + operator and provide the same functionality.
+

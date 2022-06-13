@@ -1,0 +1,14 @@
+1) Parameter passing
+- Callback function. Pass in functions for different behaviors each time you call it
+- Logic to act upon parameters passed into the function
+- A function can call another function and act upon its return value (which can differ)
+
+
+2) Heterogeneous collection
+- Due to virtual functions, calling a function on various objects may result in different functionality.
+	- Overridden functions
+
+
+What is the difference between #1 and #2 above?
+Since Heterogeneous collection uses virtual functions, it overrides/uses the vtab. However, with parameter passing, all the function pointer code is handled by the programmer and as a result, there are no edits to the vtab.
+
